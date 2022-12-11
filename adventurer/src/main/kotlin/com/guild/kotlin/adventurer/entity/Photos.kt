@@ -17,16 +17,20 @@ class Photos {
     @Column(name = "Job_id")
     var job: Jobs? = null
 
-    @Column(name = "Report_id")
+    @ManyToOne
+    @JoinColumn(name = "Report_id")
     var report: Reports? = null
 
-    @Column(name = "Review_id")
+    @ManyToOne
+    @JoinColumn(name = "Review_id")
     var review: Reviews? = null
 
-    @Column(name = "Group_id")
+    @ManyToOne
+    @JoinColumn(name = "Group_id")
     var group: Groups? = null
 
-    @Column(name = "User_id")
+    @ManyToOne
+    @JoinColumn(name = "User_id")
     var user: Users? = null
 
     constructor(

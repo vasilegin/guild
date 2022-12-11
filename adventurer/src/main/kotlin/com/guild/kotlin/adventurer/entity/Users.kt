@@ -37,10 +37,12 @@ class Users {
     @Column(name = "Phone_number")
     var phone_number: String? = null
 
-    @Column(name = "Adventurer_id")
+    @ManyToOne
+    @JoinColumn(name = "Adventurer_id")
     var adventurer: Adventurer? = null
 
-    @Column(name = "Guild_staff_id")
+    @ManyToOne
+    @JoinColumn(name = "Guild_staff_id")
     var guild_staff: Guild_staff? = null
 
     @Column(name = "Balance")

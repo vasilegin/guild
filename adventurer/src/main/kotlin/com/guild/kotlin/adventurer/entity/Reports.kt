@@ -12,7 +12,8 @@ class Reports {
     @Column(name = "id")
     var id: Long = 0
 
-    @Column(name = "Job_id")
+    @ManyToOne
+    @JoinColumn(name = "Job_id")
     var job: Jobs? = null
 
     @Column(name = "Text")

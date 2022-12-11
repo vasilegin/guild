@@ -11,10 +11,12 @@ class Reviews {
     @Column(name = "id")
     var id: Long = 0
 
-    @Column(name = "Job_id")
+    @ManyToOne
+    @JoinColumn(name = "Job_id")
     var job: Jobs? = null
 
-    @Column(name = "Author_id")
+    @ManyToOne
+    @JoinColumn(name = "Author_id")
     var author: Users? = null
 
     @Column(name = "Text")

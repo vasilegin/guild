@@ -13,13 +13,16 @@ class Jobs {
     @Column(name = "id")
     var id: Long = 0
 
-    @Column(name = "Customer_id")
+    @ManyToOne
+    @JoinColumn(name = "Customer_id")
     var customer: Users? = null
 
-    @Column(name = "Adventurer_id")
+    @ManyToOne
+    @JoinColumn(name = "Adventurer_id")
     var adventurer: Users? = null
 
-    @Column(name = "Group_id")
+    @ManyToOne
+    @JoinColumn(name = "Group_id")
     var group: Groups? = null
 
     @Column(name = "Title")
