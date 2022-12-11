@@ -19,7 +19,7 @@ class Adventurer {
     @Column(name = "Role")
     var role: String? = null
 
-    @Column(name = "Role")
+    @Column(name = "Weapon")
     var weapon: String? = null
 
     constructor(id: Long, rank: String?, role: String?, weapon: String?) {

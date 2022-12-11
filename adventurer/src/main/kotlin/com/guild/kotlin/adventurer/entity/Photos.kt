@@ -14,7 +14,8 @@ class Photos {
     @Column(name = "Location")
     var location: String? = null
 
-    @Column(name = "Job_id")
+    @ManyToOne
+    @JoinColumn(name = "Job_id")
     var job: Jobs? = null
 
     @ManyToOne
