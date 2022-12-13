@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.0.0"
+	id("org.springframework.boot") version "2.5.8"
 	id("io.spring.dependency-management") version "1.1.0"
 	kotlin("jvm") version "1.7.21"
 	kotlin("plugin.spring") version "1.7.21"
@@ -25,7 +25,10 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	implementation("io.springfox:springfox-swagger2:2.9.2")
+
+	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
 }
 
 tasks.withType<KotlinCompile> {
