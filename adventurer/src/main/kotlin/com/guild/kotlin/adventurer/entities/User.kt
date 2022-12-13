@@ -1,5 +1,7 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.hibernate.annotations.Type
 import java.math.BigDecimal
 import java.time.LocalDate
 import javax.persistence.*
@@ -13,10 +15,12 @@ open class User {
     open var id: Long? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Login")
     open var login: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Password")
     open var password: String? = null
 
@@ -24,49 +28,60 @@ open class User {
     open var birthday: LocalDate? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Gender")
     open var gender: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Surname")
     open var surname: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Firstname")
     open var firstname: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Email")
     open var email: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Phone_number")
     open var phoneNumber: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "users")
     @JoinColumn(name = "Adventurer_id")
     open var adventurer: Adventurer? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "users")
     @JoinColumn(name = "Guild_staff_id")
     open var guildStaff: GuildStaff? = null
 
     @Column(name = "Balance")
     open var balance: BigDecimal? = null
 
-    @OneToMany(mappedBy = "author")
-    open var reviews: MutableSet<Review> = mutableSetOf()
-
+//    @OneToMany(mappedBy = "author")
+//    open var reviews: MutableSet<Review> = mutableSetOf()
+//
     @OneToMany(mappedBy = "adventurer")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
     open var jobs: MutableSet<Job> = mutableSetOf()
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
     open var orders: MutableSet<Job> = mutableSetOf()
 
     @OneToMany(mappedBy = "adventurer")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "group", "adventurer")
     open var participates: MutableSet<Participate> = mutableSetOf()
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
     constructor(

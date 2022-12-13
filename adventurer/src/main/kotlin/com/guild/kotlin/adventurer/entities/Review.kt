@@ -1,5 +1,6 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.Type
 import javax.persistence.*
 
@@ -12,10 +13,12 @@ open class Review {
     open var id: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
     @JoinColumn(name = "Job_id")
     open var job: Job? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
     @JoinColumn(name = "Author_id")
     open var author: User? = null
 
@@ -27,6 +30,7 @@ open class Review {
     open var score: Long? = null
 
     @OneToMany(mappedBy = "review")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
     constructor(id: Long?, job: Job?, author: User?, text: String?, score: Long?) {

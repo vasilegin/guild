@@ -1,5 +1,7 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
@@ -11,6 +13,7 @@ open class Group {
     open var id: Long? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Name")
     open var name: String? = null
 
@@ -18,12 +21,15 @@ open class Group {
     open var active: Boolean? = null
 
     @OneToMany(mappedBy = "group")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
     open var jobs: MutableSet<Job> = mutableSetOf()
 
     @OneToMany(mappedBy = "group")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "group", "adventurer")
     open var participates: MutableSet<Participate> = mutableSetOf()
 
     @OneToMany(mappedBy = "group")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
     constructor(

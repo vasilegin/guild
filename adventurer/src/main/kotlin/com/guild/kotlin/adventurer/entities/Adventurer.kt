@@ -1,6 +1,7 @@
 package com.guild.kotlin.adventurer.entities
 
 import com.guild.kotlin.adventurer.entities.User
+import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
@@ -12,19 +13,19 @@ open class Adventurer {
     open var id: Long? = null
 
     @Lob
-    @Column(name = "\"Rank\"")
+    @Type(type = "org.hibernate.type.TextType")
+    @Column(name = "Rank")
     open var rank: String? = null
 
     @Lob
-    @Column(name = "\"Role\"")
+    @Type(type = "org.hibernate.type.TextType")
+    @Column(name = "Role")
     open var role: String? = null
 
     @Lob
-    @Column(name = "\"Weapon\"")
+    @Type(type = "org.hibernate.type.TextType")
+    @Column(name = "Weapon")
     open var weapon: String? = null
-
-    @OneToMany(mappedBy = "adventurer")
-    open var users: MutableSet<User> = mutableSetOf()
 
     constructor(id: Long?, rank: String?, role: String?, weapon: String?) {
         this.id = id

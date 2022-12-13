@@ -1,5 +1,7 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
@@ -11,19 +13,20 @@ open class GuildStaff {
     open var id: Long? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Position")
     open var position: String? = null
 
     @OneToMany(mappedBy = "guildStaff")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
     open var users: MutableSet<User> = mutableSetOf()
 
-    constructor(id: Long?, position: String?, users: MutableSet<User>) {
+    constructor(id: Long?, position: String?) {
         this.id = id
         this.position = position
-        this.users = users
     }
 
     override fun toString(): String {
-        return "GuildStaff(id=$id, position=$position, users=$users)"
+        return "GuildStaff(id=$id, position=$position)"
     }
 }

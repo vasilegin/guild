@@ -1,5 +1,6 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.Type
 import java.math.BigDecimal
 import java.time.OffsetDateTime
@@ -14,18 +15,22 @@ open class Job {
     open var id: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
     @JoinColumn(name = "Customer_id")
     open var customer: User? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
     @JoinColumn(name = "Adventurer_id")
     open var adventurer: User? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "jobs", "participates", "photos")
     @JoinColumn(name = "Group_id")
     open var group: Group? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Title")
     open var title: String? = null
 
@@ -34,6 +39,7 @@ open class Job {
     open var description: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Rank")
     open var rank: String? = null
 
@@ -41,10 +47,12 @@ open class Job {
     open var reward: BigDecimal? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Location")
     open var location: String? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Status")
     open var status: String? = null
 
@@ -61,12 +69,15 @@ open class Job {
     open var dateResolved: OffsetDateTime? = null
 
     @OneToMany(mappedBy = "job")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "job", "author", "photos")
     open var reviews: MutableSet<Review> = mutableSetOf()
 
     @OneToMany(mappedBy = "job")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "job", "photos")
     open var reports: MutableSet<Report> = mutableSetOf()
 
     @OneToMany(mappedBy = "job")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
     constructor(

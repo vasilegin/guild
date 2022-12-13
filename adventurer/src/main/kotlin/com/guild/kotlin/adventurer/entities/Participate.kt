@@ -1,5 +1,7 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.hibernate.annotations.Type
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -12,14 +14,17 @@ open class Participate {
     open var id: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "jobs", "participates", "photos")
     @JoinColumn(name = "Group_id")
     open var group: Group? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
     @JoinColumn(name = "Adventurer_id")
     open var adventurer: User? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Role")
     open var role: String? = null
 

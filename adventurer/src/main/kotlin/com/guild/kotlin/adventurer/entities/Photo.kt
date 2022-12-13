@@ -1,5 +1,7 @@
 package com.guild.kotlin.adventurer.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
@@ -11,26 +13,32 @@ open class Photo {
     open var id: Long? = null
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Location")
     open var location: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
     @JoinColumn(name = "Job_id")
     open var job: Job? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "job", "photos")
     @JoinColumn(name = "Report_id")
     open var report: Report? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "job", "author", "photos")
     @JoinColumn(name = "Review_id")
     open var review: Review? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "jobs", "participates", "photos")
     @JoinColumn(name = "Group_id")
     open var group: Group? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
     @JoinColumn(name = "User_id")
     open var user: User? = null
 
