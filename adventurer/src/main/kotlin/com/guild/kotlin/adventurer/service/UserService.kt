@@ -2,6 +2,6 @@ package com.guild.kotlin.adventurer.service
 
 import com.guild.kotlin.adventurer.entities.User
 
-interface UserService {
+interface serService {
     fun findAll(): List<User>
 }

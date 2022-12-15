@@ -2,6 +2,7 @@ package com.guild.kotlin.adventurer.entities
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.Type
+import org.springframework.security.core.GrantedAuthority
 import java.math.BigDecimal
 import java.time.LocalDate
 import javax.persistence.*
@@ -62,12 +63,17 @@ open class User {
     @JoinColumn(name = "Guild_staff_id")
     open var guildStaff: GuildStaff? = null
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "users")
+    @JoinColumn(name = "Role_id")
+    open var role: Role? = null
+
     @Column(name = "Balance")
     open var balance: BigDecimal? = null
 
-//    @OneToMany(mappedBy = "author")
-//    open var reviews: MutableSet<Review> = mutableSetOf()
-//
+    @OneToMany(mappedBy = "author")
+    open var reviews: MutableSet<Review> = mutableSetOf()
+
     @OneToMany(mappedBy = "adventurer")
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
     open var jobs: MutableSet<Job> = mutableSetOf()
@@ -84,10 +90,11 @@ open class User {
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
+
     constructor(
         id: Long?,
         login: String?,
-        password: String?,
+        password: String,
         birthday: LocalDate?,
         gender: String?,
         surname: String?,
