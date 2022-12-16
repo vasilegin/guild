@@ -63,7 +63,7 @@ open class User {
     @JoinColumn(name = "Guild_staff_id")
     open var guildStaff: GuildStaff? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "users")
     @JoinColumn(name = "Role_id")
     open var role: Role? = null

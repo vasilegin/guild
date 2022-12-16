@@ -23,7 +23,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	runtimeOnly("org.postgresql:postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.json:json:20211205")
 
@@ -31,7 +32,6 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
 
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
 

@@ -16,7 +16,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/jobs")
-//@CrossOrigin(origins = ["http://localhost:3000"])
+@CrossOrigin(origins = ["http://localhost:3000"])
 class JobControllerImpl(private val jobService: IService<Job>, private val jobPageService: IPageService<Job>) : Resource<Job> {
 
 
@@ -51,5 +51,10 @@ class JobControllerImpl(private val jobService: IService<Job>, private val jobPa
 
     override fun deleteById(@PathVariable id: Long?): ResponseEntity<String?> {
         return ResponseEntity.ok(jobService.deleteById(id))
+    }
+
+    @GetMapping("/str")
+    fun hellow() : ResponseEntity<String>{
+        return ResponseEntity.ok("hellow")
     }
 }
