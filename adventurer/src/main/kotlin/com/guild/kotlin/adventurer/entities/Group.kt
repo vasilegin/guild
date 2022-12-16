@@ -8,7 +8,7 @@ import javax.persistence.*
 @Table(name = "groups", schema = "public")
 open class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     open var id: Long? = null
 

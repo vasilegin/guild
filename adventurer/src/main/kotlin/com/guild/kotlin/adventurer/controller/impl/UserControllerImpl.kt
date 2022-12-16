@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -26,7 +27,7 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
     @PostMapping(value = ["/authenticate"])
     fun authenticate(@RequestBody user: User): ResponseEntity<String?>? {
         val jsonObject = JSONObject()
-        System.out.println(user);
+        System.out.println(user)
         try {
             val authentication: Authentication = authenticationManager
                 .authenticate(UsernamePasswordAuthenticationToken(user.login, user.password))
@@ -53,8 +54,9 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
     @PostMapping(value = ["/register"])
     fun register(@RequestBody user: User): ResponseEntity<String?>? {
         val jsonObject = JSONObject()
+        System.out.println(jsonObject);
         try {
-            user.password = BCryptPasswordEncoder().encode(user.password)
+            user.password = NoOpPasswordEncoder.getInstance().encode(user.password)
             user.role = roleRepository.findByName(ConstantUtils.USER.toString())
             val savedUser = userRepository.saveAndFlush(user)
             jsonObject.put("message", savedUser.login + " saved succesfully")

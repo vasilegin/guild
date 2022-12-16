@@ -11,13 +11,13 @@ import javax.persistence.*
 @Table(name = "users", schema = "public")
 open class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     open var id: Long? = null
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Login")
+    @Column(name = "Login", unique=true)
     open var login: String? = null
 
     @Lob

@@ -10,7 +10,7 @@ import javax.persistence.*
 @Table(name = "jobs", schema = "public")
 open class Job {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     open var id: Long? = null
 

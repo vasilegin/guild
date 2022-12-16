@@ -10,4 +10,5 @@ import java.util.*
 
 interface UserRepository : JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     fun findByLogin(login: String?): User?
+
 }
