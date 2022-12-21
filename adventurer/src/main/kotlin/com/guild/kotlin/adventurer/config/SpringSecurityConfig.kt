@@ -41,6 +41,7 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
             .authorizeRequests()
             .antMatchers("/user/**").permitAll()
             .anyRequest().authenticated()
+
         http.apply(JwtTokenConfigurer(tokenProvider!!))
     }
 }

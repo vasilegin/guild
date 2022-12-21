@@ -40,7 +40,24 @@ class JobServiceImpl(private val jobRepository: JobRepository): IService<Job>, I
         return jobRepository.saveAndFlush(job)
     }
 
-//    override fun findAll(pageable: Pageable?, searchText: String?): Page<Job> {
-//        return jobRepository.findAllJobs(pageable,  searchText)
-//    }
+    fun findAll(pageable: Pageable?, title: String?): Page<Job>? {
+        return jobRepository.findAllByTitleContaining(pageable, title)
+    }
+
+    fun findAll(pageable: Pageable?, status: String?, title: String?): Page<Job>? {
+        return jobRepository.findAllByStatusAndTitleContaining(pageable, status, title)
+    }
+
+    fun findAllByStatus(pageable: Pageable?, status: String?): Page<Job>? {
+        return jobRepository.findAllByStatus(pageable, status)
+    }
+
+    fun findAllByStatusAndRank(pageable: Pageable?, status: String?, rank: String?): Page<Job>? {
+        return jobRepository.findAllByStatusAndRank(pageable, status, rank)
+    }
+
+    fun findAll(pageable: Pageable?, status: String?, title: String?, rank: String?): Page<Job>? {
+        return jobRepository.findAllByStatusAndTitleContainingAndRank(pageable, status, title, rank)
+    }
+
 }

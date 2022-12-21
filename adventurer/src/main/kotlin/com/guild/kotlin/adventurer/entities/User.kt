@@ -50,6 +50,12 @@ open class User {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
+    @Column(name = "Status")
+    open var status: String? = null
+
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Phone_number")
     open var phoneNumber: String? = null
 

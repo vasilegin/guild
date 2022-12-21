@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = ["http://localhost:3000"])
+@CrossOrigin(origins = ["http://localhost:3002"])
 class UserControllerImpl(private val authenticationManager: AuthenticationManager,
                          private val tokenProvider: JwtTokenProvider,
                          private val roleRepository: RoleRepository,
@@ -37,6 +37,9 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
                 jsonObject.put("authorities", authentication.getAuthorities())
                 val user = userRepository.findByLogin(login)!!
                 val role = user.role!!.name!!
+                jsonObject.put("id", user.id)
+                jsonObject.put("role", role)
+                jsonObject.put("status", user.status)
                 jsonObject.put("token", tokenProvider.createToken(login, role))
                 return ResponseEntity(jsonObject.toString(), HttpStatus.OK)
             }
@@ -58,6 +61,7 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
         try {
             user.password = NoOpPasswordEncoder.getInstance().encode(user.password)
             user.role = roleRepository.findByName(ConstantUtils.USER.toString())
+            user.status = "USER"
             val savedUser = userRepository.saveAndFlush(user)
             jsonObject.put("message", savedUser.login + " saved succesfully")
             return ResponseEntity(jsonObject.toString(), HttpStatus.OK)
@@ -70,10 +74,5 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
             return ResponseEntity(jsonObject.toString(), HttpStatus.UNAUTHORIZED)
         }
         return null
-    }
-
-    @GetMapping("/str")
-    fun hellow(): ResponseEntity<String> {
-        return ResponseEntity("hellow", HttpStatus.OK)
     }
 }

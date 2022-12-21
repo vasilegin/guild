@@ -2,8 +2,6 @@ package com.guild.kotlin.adventurer.service.impl
 
 import com.guild.kotlin.adventurer.entities.User
 import com.guild.kotlin.adventurer.repo.UserRepository
-import com.guild.kotlin.adventurer.service.IPageService
-import com.guild.kotlin.adventurer.service.IService
 import org.json.JSONObject
 import org.json.JSONException
 import org.springframework.data.domain.Page
@@ -12,16 +10,30 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class AdventurerUserServiceImpl(private val userRepository: UserRepository): IService<User>, IPageService<User>{
-    override fun findAll(): List<User> {
-        return userRepository.findAll()
+class AdventurerUserServiceImpl(private val userRepository: UserRepository) {
+    fun findAllAdv(pageable: Pageable?): Page<User>? {
+        return userRepository.findAllByAdventurerIsNotNull(pageable!!)
     }
 
-    override fun findById(id: Long?): Optional<User>? {
-        return userRepository.findById(id!!)
+    fun findAllByLoginContainingAndAdventurerIsNotNull(pageable: Pageable?, login: String): Page<User>?{
+        return userRepository.findAllByLoginContainingAndAdventurerIsNotNull(pageable, login)
     }
 
-    override fun deleteById(id: Long?): String? {
+    //    override fun findAll(pageable: Pageable?): Page<User> {
+//        return userRepository.findAll(pageable!!)
+//    override fun findAll(pageable: Pageable?, searchText: String?): Page<User> {
+//        return userRepository.findAllAdventurers(pageable,  searchText)
+//    }
+
+    fun findAll(): List<User>? {
+        return userRepository.findAllByAdventurerIsNotNull()
+    }
+
+    fun findById(id: Long?): Optional<User>? {
+        return userRepository.findByIdAndAdventurerIsNotNull(id!!)
+    }
+
+    fun deleteById(id: Long?): String? {
         val jsonObject = JSONObject()
         try {
             userRepository.deleteById(id!!)
@@ -32,15 +44,7 @@ class AdventurerUserServiceImpl(private val userRepository: UserRepository): ISe
         return jsonObject.toString()
     }
 
-    override fun saveOrUpdate(user: User): User {
+    fun saveOrUpdate(user: User): User {
         return userRepository.saveAndFlush(user)
     }
-
-    override fun findAll(pageable: Pageable?): Page<User> {
-        return userRepository.findAll(pageable!!)
-    }
-
-//    override fun findAll(pageable: Pageable?, searchText: String?): Page<User> {
-//        return userRepository.findAllUsers(pageable,  searchText)
-//    }
 }
