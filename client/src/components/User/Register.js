@@ -71,6 +71,11 @@ const Register = (props) => {
       })
       .catch((error) => {
         console.log(error);
+        setMessage("Registration Error");
+        setShowDanger(true);
+        setTimeout(() => {
+          setShowDanger(false);
+        }, 2000);
       });
   };
 

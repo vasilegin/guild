@@ -20,6 +20,7 @@ import {
 import MyToast from "../MyToast";
 import UploadComponent from "../Images/Upload";
 import Corousel from "../Images/Corousel";
+import {fetchUser} from "../../services/user/adventurer/userActions";
 
 class Job extends Component {
 
@@ -30,9 +31,9 @@ class Job extends Component {
 
   initialState = {
     id: "",
-    adventurer_id: "",
-    customer_id: "",
-    group_id: "",
+    adventurer: null,
+    customer: null,
+    group: null,
     title: "",
     description: "",
     status: "",
@@ -43,6 +44,7 @@ class Job extends Component {
     dateAccepted: "",
     datePosted: "",
     dateResolved: "",
+    userId: this.props.id,
 
     show: false,
     picture: [],
@@ -68,7 +70,6 @@ class Job extends Component {
     this.props.fetchJob(jobId);
     setTimeout(() => {
       let job = this.props.jobObject.job;
-      console.log(job)
       var photos = job.photos.map((item) => item.location)
       console.log("1")
       if (job != null) {
@@ -76,6 +77,9 @@ class Job extends Component {
           id: job.id,
           title: job.title,
           description: job.description,
+          adventurer: job.adventurer,
+          customer: job.customer,
+          group: job.group,
           status: job.status,
           rank: job.rank,
           reward: job.reward,
@@ -106,16 +110,19 @@ class Job extends Component {
 
   submitJob = (event) => {
     event.preventDefault();
-    console.log("2")
-    console.log(this.state)
+    this.props.fetchUser(this.state.userId)
+    this.state.customer = this.props.userObject.users
+    // console.log("2")
+    console.log(this.props.userObject.users)
     const job = {
       id: this.state.id,
-      adventurer_id: this.state.adventurer_id,
-      customer_id: this.state.customer_id,
-      group_id: this.state.group_id,
+      adventurer: this.state.adventurer,
+      customer: this.state.customer,
+      customerId: this.state.customer.id,
+      group: this.state.group,
       title: this.state.title,
       description: this.state.description,
-      status: this.state.status,
+      status: "Created",
       rank: this.state.rank,
       reward: this.state.reward,
       location: this.state.location,
@@ -124,7 +131,7 @@ class Job extends Component {
       datePosted: this.state.datePosted,
       dateResolved: this.state.dateResolved
     };
-
+    console.log(job)
     this.props.saveJob(job);
     setTimeout(() => {
       if (this.props.jobObject.job != null) {
@@ -169,19 +176,19 @@ class Job extends Component {
     console.log(this.state)
     const job = {
       id: this.state.id,
-      adventurer_id: this.state.adventurer_id,
-      customer_id: this.state.customer_id,
-      group_id: this.state.group_id,
+      adventurer: this.state.adventurer,
+      customer: this.state.customer,
+      group: this.state.group,
       title: this.state.title,
       description: this.state.description,
       status: this.state.status,
       rank: this.state.rank,
       reward: this.state.reward,
       location: this.state.location,
-      date_created: new Date(),
-      date_accepted: this.state.date_accepted,
-      date_posted: this.state.date_posted,
-      date_resolved: this.state.date_resolved
+      dateCreated: new Date(),
+      dateAccepted: this.state.dateAccepted,
+      datePosted: this.state.datePosted,
+      dateResolved: this.state.dateResolved
     };
     this.props.updateJob(job);
     setTimeout(() => {
@@ -207,8 +214,7 @@ class Job extends Component {
 
 
   render() {
-    const { title, description, location, reward} =
-      this.state;
+    const {t, d, l, r} = this.state
     return (
       <div>
         <div style={{ display: this.state.show ? "block" : "none" }}>
@@ -251,8 +257,8 @@ class Job extends Component {
                     required
                     autoComplete="off"
                     type="text"
-                    name="Title"
-                    value={title}
+                    name="title"
+                    value={t}
                     onChange={this.jobChange}
                     className={"bg-dark text-white"}
                     placeholder="Enter Job Title"
@@ -268,8 +274,8 @@ class Job extends Component {
                       as = "textarea"
                       rows ={10}
                       type="text"
-                      name="Description"
-                      value={description}
+                      name="description"
+                      value={d}
                       onChange={this.jobChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Job Description"
@@ -284,8 +290,8 @@ class Job extends Component {
                     required
                     autoComplete="off"
                     type="text"
-                    name="Location"
-                    value={location}
+                    name="location"
+                    value={l}
                     onChange={this.jobChange}
                     className={"bg-dark text-white"}
                     placeholder="Enter Job Location"
@@ -299,8 +305,8 @@ class Job extends Component {
                       required
                       autoComplete="off"
                       type="number"
-                      name="Reward"
-                      value={reward}
+                      name="reward"
+                      value={r}
                       onChange={this.jobChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Job Reward"
@@ -343,6 +349,7 @@ class Job extends Component {
 const mapStateToProps = (state) => {
   return {
     jobObject: state.job,
+    userObject: state.user,
   };
 };
 
@@ -351,6 +358,7 @@ const mapDispatchToProps = (dispatch) => {
     saveJob: (job) => dispatch(saveJob(job)),
     fetchJob: (jobId) => dispatch(fetchJob(jobId)),
     updateJob: (job) => dispatch(updateJob(job)),
+    fetchUser: (userId) => dispatch(fetchUser(userId)),
   };
 };
 

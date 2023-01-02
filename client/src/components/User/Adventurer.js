@@ -69,7 +69,10 @@ class Adventurer extends Component {
         setTimeout(() => {
             let user = this.props.userObject.users;
             console.log(user)
-            var photos = user.photos.map((item) => item.location)
+            var photos = []
+            if (user.photos.length > 0){
+                var photos = user.photos.map((item) => item.location)
+            }
             if (user != null) {
                 this.setState({
                     id: user.id,

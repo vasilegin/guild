@@ -69,7 +69,10 @@ class JobDetail extends Component {
         this.props.fetchJob(jobId);
         setTimeout(() => {
             let job = this.props.jobObject.job;
-            var photos = job.photos.map((item) => item.location)
+            var photos = []
+            if (job.photos.length > 0){
+                var photos = job.photos.map((item) => item.location)
+            }
             if (job != null) {
                 this.setState({
                     id: job.id,
@@ -90,13 +93,13 @@ class JobDetail extends Component {
                 });
                 if (job.adventurer != null){
                     this.setState({
-                        adventurer_id: job.adventurer.id,
+                        adventurerId: job.adventurer.id,
                         adventurerLogin: job.adventurer.login
                     })
                 }
                 if (job.customer != null){
                     this.setState({
-                        customer_id: job.customer.id
+                        customerId: job.customer.id
                     })
                 }
                 if (job.group != null){
@@ -123,8 +126,8 @@ class JobDetail extends Component {
         // console.log(this.state)
         const job = {
             id: this.state.id,
-            adventurer_id: this.state.adventurer_id,
-            customer_id: this.state.customer_id,
+            adventurerId: this.state.adventurerId,
+            customerId: this.state.customerId,
             group_id: this.state.group_id,
             title: this.state.title,
             description: this.state.description,
@@ -170,15 +173,11 @@ class JobDetail extends Component {
         // console.log({ ...this.state});
     };
 
-    confirmUpload = () => {
-        const { pictures, defaultImages } = this.state.upload;
-        // console.log("Confirm Upload =>", [...pictures]);
-        // console.log("Confirm Upload =>", [...defaultImages]);
-    };
 
     handlerAccept = () => {
         this.state.status = "Execution"
         this.props.fetchUser(this.state.userId)
+        this.state.adventurerId = this.props.userObject.users.id
         this.state.adventurer = this.props.userObject.users
         this.updateJob()
     };
@@ -198,6 +197,8 @@ class JobDetail extends Component {
             id: this.state.id,
             adventurer: this.state.adventurer,
             customer: this.state.customer,
+            adventurerId: this.state.adventurerId,
+            customerId: this.state.customerId,
             group: this.state.group,
             title: this.state.title,
             description: this.state.description,

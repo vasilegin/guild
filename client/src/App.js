@@ -45,7 +45,8 @@ const App = () => {
             <Switch>
               <Route path="/" exact component={Welcome} />
               <Route path="/home" exact component={Home} />
-              <Route path="/add" exact component={Job} />
+              <Route path="/add" exact render={(props) =>
+                  (<Job{...props} id={auth.id}/>)}/>
               <Route path="/edit/:id" exact component={Job} />
               <Route path="/job/:id" exact render={(props) =>
                   (<JobDetail{...props}

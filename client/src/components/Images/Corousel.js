@@ -11,7 +11,7 @@ class CustomCarousel extends Component{
 
     render() {
         if (this.images.length < 1){
-            this.images = ["https://st.depositphotos.com/1787196/1330/i/450/depositphotos_13302306-stock-photo-furry-cute-monster.jpg"]
+            this.images = ["https://www.pngmart.com/files/4/Blue-Monster-PNG-Free-Download.png"]
         }
 
         const carousel = this.images.map(image=>{
