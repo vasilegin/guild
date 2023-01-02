@@ -18,11 +18,11 @@ import java.util.*
 
 @RestController
 @RequestMapping("/adventurer")
-@CrossOrigin(origins = ["http://localhost:3002"])
-class AdventurersControllerImpl(private val userPageService: AdventurerUserServiceImpl) {
+@CrossOrigin(origins = ["http://localhost:3000"])
+class AdventurersControllerImpl(private val userPageService: AdventurerUserServiceImpl) : Resource<User>  {
 
     @GetMapping
-    fun findAll(@RequestParam(defaultValue = "0") page: Int,
+    override fun findAll(@RequestParam(defaultValue = "0") page: Int,
                          @RequestParam(defaultValue = "10") size: Int,
                          @RequestParam(defaultValue = "firstname") sort: String?,
                          @RequestParam(defaultValue = "firstname") sortDir: String?): ResponseEntity<Page<User>> {
@@ -43,25 +43,20 @@ class AdventurersControllerImpl(private val userPageService: AdventurerUserServi
         return ResponseEntity.ok(userPageService.findAllAdv(pageable))
     }
 
-//    override fun findAll(pageable: Pageable?, @PathVariable searchText: String?): ResponseEntity<Page<Job>> {
-//        System.out.println(jobPageService.findAll(pageable, searchText));
-//        return ResponseEntity.ok(jobPageService.findAll(pageable, searchText))
-//    }
-
     @GetMapping("{id}")
-    fun findById(@PathVariable id: Long?): ResponseEntity<Optional<User>> {
+    override fun findById(@PathVariable id: Long?): ResponseEntity<Optional<User>> {
         return ResponseEntity.ok(userPageService.findById(id))
     }
 
-//    override fun save(job: Job): ResponseEntity<Job?> {
-//        return ResponseEntity.ok(userService.saveOrUpdate(job))
-//    }
-//
-//    override fun update(job: Job): ResponseEntity<Job?> {
-//        return ResponseEntity.ok(userService.saveOrUpdate(job))
-//    }
-//
-//    override fun deleteById(@PathVariable id: Long?): ResponseEntity<String?> {
-//        return ResponseEntity.ok(userService.deleteById(id))
-//    }
+    override fun save(user: User): ResponseEntity<User?> {
+        return ResponseEntity.ok(userPageService.saveOrUpdate(user))
+    }
+
+    override fun update(user: User): ResponseEntity<User?> {
+        return ResponseEntity.ok(userPageService.saveOrUpdate(user))
+    }
+
+    override fun deleteById(@PathVariable id: Long?): ResponseEntity<String?> {
+        return ResponseEntity.ok(userPageService.deleteById(id))
+    }
 }

@@ -19,11 +19,9 @@ class AdventurerUserServiceImpl(private val userRepository: UserRepository) {
         return userRepository.findAllByLoginContainingAndAdventurerIsNotNull(pageable, login)
     }
 
-    //    override fun findAll(pageable: Pageable?): Page<User> {
-//        return userRepository.findAll(pageable!!)
-//    override fun findAll(pageable: Pageable?, searchText: String?): Page<User> {
-//        return userRepository.findAllAdventurers(pageable,  searchText)
-//    }
+    fun findAll(pageable: Pageable?): Page<User> {
+        return userRepository.findAll(pageable!!)
+    }
 
     fun findAll(): List<User>? {
         return userRepository.findAllByAdventurerIsNotNull()

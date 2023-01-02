@@ -17,7 +17,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/jobs")
-@CrossOrigin(origins = ["http://localhost:3002"])
+@CrossOrigin(origins = ["http://localhost:3000"])
 class JobControllerImpl(private val jobService: IService<Job>, private val jobPageService: IPageService<Job>, private val jobServiceImpl: JobServiceImpl) : Resource<Job> {
 
 
@@ -62,6 +62,7 @@ class JobControllerImpl(private val jobService: IService<Job>, private val jobPa
     }
 
     override fun save(job: Job): ResponseEntity<Job?> {
+        System.out.println(job);
         return ResponseEntity.ok(jobService.saveOrUpdate(job))
     }
 

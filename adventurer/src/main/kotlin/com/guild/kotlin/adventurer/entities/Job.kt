@@ -16,13 +16,19 @@ open class Job {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
-    @JoinColumn(name = "Customer_id")
+    @JoinColumn(name = "Customer_id", insertable = false, updatable = false)
     open var customer: User? = null
+
+    @Column(name = "Customer_id")
+    open var customerId: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
-    @JoinColumn(name = "Adventurer_id")
+    @JoinColumn(name = "Adventurer_id", insertable = false, updatable = false)
     open var adventurer: User? = null
+
+    @Column(name = "Adventurer_id")
+    open var adventurerId: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "jobs", "participates", "photos")
@@ -83,7 +89,9 @@ open class Job {
     constructor(
         id: Long?,
         customer: User?,
+        customerId: Long?,
         adventurer: User?,
+        adventurerId: Long?,
         group: Group?,
         title: String?,
         description: String?,
@@ -98,7 +106,9 @@ open class Job {
     ) {
         this.id = id
         this.customer = customer
+        this.customerId = customerId
         this.adventurer = adventurer
+        this.adventurerId = adventurerId
         this.group = group
         this.title = title
         this.description = description

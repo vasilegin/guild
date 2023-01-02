@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*
 import java.util.Optional
 
 interface Resource<T> {
-//    @GetMapping("/search/{searchText}")
+
+//    @GetMapping("/search")
 //    fun findAll(pageable: Pageable?, @PathVariable searchText: String?): ResponseEntity<Page<T>>
 
     @GetMapping
