@@ -85,6 +85,14 @@ class JobList extends Component {
           this.state.jobsPerPage +
           "&id=" + this.state.userId
     }
+    if (this.state.status === "CURRENT"){
+      this.request = "http://localhost:8081/rest/jobs/adventurer?page=" +
+          currentPage +
+          "&size=" +
+          this.state.jobsPerPage +
+          "&status=Execution"+
+          "&id=" + this.state.userId
+    }
     axios
       .get(this.request)
       .then((response) => response.data)
@@ -257,6 +265,7 @@ class JobList extends Component {
               <div style={{ float: "right" }}>
                 <InputGroup size="md">
                   <FormControl
+                      disabled={true}
                       placeholder="Search"
                       name="search"
                       value={search}
@@ -265,6 +274,7 @@ class JobList extends Component {
                   />
                   <InputGroup.Append>
                     <Button
+                        disabled={true}
                         size="sm"
                         variant="outline-info"
                         type="button"

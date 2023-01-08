@@ -21,8 +21,8 @@ import UploadComponent from "../Images/Upload";
 import Corousel from "../Images/Corousel";
 import {Profile} from "./Profile";
 import {UserTest} from "../Utils/UserTest";
-import Gist from "../Utils/Gist";
 import JobListForUser from "../Job/JobListForUser";
+import Gist from "../Utils/Gist";
 
 class User extends Component {
 
@@ -48,6 +48,9 @@ class User extends Component {
         guildStaff: null,
         role: null,
         change: false,
+        jobs: [],
+        orders: [],
+
         current: "PROFILE",
 
         show: false,
@@ -90,6 +93,8 @@ class User extends Component {
                     adventurer: user.adventurer,
                     guildStaff: user.guildStaff,
                     photos: photos,
+                    jobs: user.jobs,
+                    orders: user.orders,
                     status: user.status,
                     role: user.role,
                 });
@@ -223,7 +228,10 @@ class User extends Component {
 
     render() {
         const profile = <Profile user={this.state}/>
-
+        const posted = this.state.orders.length
+        const completed = this.state.jobs.length
+        console.log(posted)
+        console.log(completed)
         return (
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
@@ -273,6 +281,9 @@ class User extends Component {
                                             <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
+                                            <Nav.Link href="#current" disabled={this.state.change} onSelect={() => this.state.current = "CURRENT"}>Current tasks</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
                                             <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
@@ -285,9 +296,10 @@ class User extends Component {
                                 </Card.Header>
                                 <Card.Body>
                                     {this.state.current === "PROFILE"? profile: ""}
+                                    {this.state.current === "CURRENT"? <JobListForUser status={"CURRENT"} id={this.state.id}/>: ""}
                                     {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
                                     {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
-                                    {this.state.current === "STATISTICS"? "STATISTICS": ""}
+                                    {this.state.current === "STATISTICS"? <Gist posted={posted} completed={completed}/>: ""}
                                 </Card.Body>
                             </Card>
                         </Col>
