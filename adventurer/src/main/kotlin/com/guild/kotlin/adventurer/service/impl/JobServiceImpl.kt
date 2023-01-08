@@ -60,4 +60,10 @@ class JobServiceImpl(private val jobRepository: JobRepository): IService<Job>, I
         return jobRepository.findAllByStatusAndTitleContainingAndRank(pageable, status, title, rank)
     }
 
+    fun findAllJobForAdventurer(pageable: Pageable?, id: Long, status: String): Page<Job>? {
+        return jobRepository.findAllByAdventurerIdAndStatus(pageable, id, status)
+    }
+    fun findAllJobForCustomer(pageable: Pageable?, id: Long): Page<Job>? {
+        return jobRepository.findAllByCustomerId(pageable, id)
+    }
 }

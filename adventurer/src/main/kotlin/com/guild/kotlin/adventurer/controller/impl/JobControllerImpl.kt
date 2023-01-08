@@ -20,6 +20,18 @@ import java.util.*
 @CrossOrigin(origins = ["http://localhost:3000"])
 class JobControllerImpl(private val jobService: IService<Job>, private val jobPageService: IPageService<Job>, private val jobServiceImpl: JobServiceImpl) : Resource<Job> {
 
+    @GetMapping("/adventurer")
+    fun findAll(pageable: Pageable,
+                @RequestParam id: Long ,
+                @RequestParam status: String): ResponseEntity<Page<Job>> {
+    return ResponseEntity.ok(jobServiceImpl.findAllJobForAdventurer(pageable, id, status))
+    }
+
+    @GetMapping("/customer")
+    fun findAll(pageable: Pageable,
+                @RequestParam id: Long): ResponseEntity<Page<Job>> {
+        return ResponseEntity.ok(jobServiceImpl.findAllJobForCustomer(pageable, id))
+    }
 
     override fun findAll(@RequestParam(defaultValue = "1") page: Int,
                          @RequestParam(defaultValue = "10") size: Int,

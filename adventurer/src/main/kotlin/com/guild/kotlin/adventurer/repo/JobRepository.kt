@@ -12,6 +12,10 @@ import java.util.*
 
 interface JobRepository : JpaRepository<Job, Long>, JpaSpecificationExecutor<Job> {
 
+    fun findAllByCustomerId(pageable: Pageable?, id: Long): Page<Job>?
+
+    fun findAllByAdventurerIdAndStatus(pageable: Pageable?, id: Long, status: String) : Page<Job>?
+
     fun findAllByStatus(pageable: Pageable?, status: String?) : Page<Job>?
     fun findAllByStatusAndTitleContaining(pageable: Pageable?, status: String?, title: String?) : Page<Job>?
 

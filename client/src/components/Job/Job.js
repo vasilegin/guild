@@ -76,10 +76,10 @@ class Job extends Component {
         this.setState({
           id: job.id,
           title: job.title,
-          description: job.description,
           adventurer: job.adventurer,
           customer: job.customer,
           group: job.group,
+          description: job.description,
           status: job.status,
           rank: job.rank,
           reward: job.reward,
@@ -88,17 +88,23 @@ class Job extends Component {
           dateAccepted: job.dateAccepted,
           datePosted: job.datePosted,
           dateResolved: job.dateResolved,
-          picture: photos
+          picture: photos,
         });
-        console.log(job)
         if (job.adventurer != null){
-          this.setState({adventurer_id: job.adventurer.id})
+          this.setState({
+            adventurerId: job.adventurer.id,
+            adventurerLogin: job.adventurer.login
+          })
         }
         if (job.customer != null){
-          this.setState({customer_id: job.customer.id})
+          this.setState({
+            customerId: job.customer.id
+          })
         }
         if (job.group != null){
-          this.setState({group_id: job.group.id})
+          this.setState({
+            group_id: job.group.id
+          })
         }
       }
     }, 1000);
@@ -116,8 +122,8 @@ class Job extends Component {
     console.log(this.props.userObject.users)
     const job = {
       id: this.state.id,
-      adventurer: this.state.adventurer,
-      customer: this.state.customer,
+      // adventurer: this.state.adventurer,
+      // customer: this.state.customer,
       customerId: this.state.customer.id,
       group: this.state.group,
       title: this.state.title,
@@ -176,8 +182,10 @@ class Job extends Component {
     console.log(this.state)
     const job = {
       id: this.state.id,
-      adventurer: this.state.adventurer,
-      customer: this.state.customer,
+      // adventurer: this.state.adventurer,
+      // customer: this.state.customer,
+      adventurerId: this.state.adventurerId,
+      customerId: this.state.customerId,
       group: this.state.group,
       title: this.state.title,
       description: this.state.description,
@@ -185,8 +193,8 @@ class Job extends Component {
       rank: this.state.rank,
       reward: this.state.reward,
       location: this.state.location,
-      dateCreated: new Date(),
-      dateAccepted: this.state.dateAccepted,
+      dateCreated: this.state.dateCreated,
+      dateAccepted: new Date(),
       datePosted: this.state.datePosted,
       dateResolved: this.state.dateResolved
     };

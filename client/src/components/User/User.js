@@ -20,8 +20,12 @@ import MyToast from "../MyToast";
 import UploadComponent from "../Images/Upload";
 import Corousel from "../Images/Corousel";
 import {Profile} from "./Profile";
+import {UserTest} from "../Utils/UserTest";
+import Gist from "../Utils/Gist";
+import JobListForUser from "../Job/JobListForUser";
 
 class User extends Component {
+
 
     constructor(props) {
         super(props);
@@ -33,16 +37,18 @@ class User extends Component {
         balance: null,
         birthday: null,
         firstname: null,
+        status: null,
         gender: null,
         login: null,
         rank: null,
         password: "",
-        phone_number: null,
+        phoneNumber: null,
         surname: null,
         adventurer: null,
-        guild_staff: null,
+        guildStaff: null,
         role: null,
         change: false,
+        current: "PROFILE",
 
         show: false,
         picture: [],
@@ -80,11 +86,12 @@ class User extends Component {
                     gender: user.gender,
                     login: user.login,
                     password: user.password,
-                    phone_number: user.phoneNumber,
+                    phoneNumber: user.phoneNumber,
                     adventurer: user.adventurer,
-                    guild_staff: user.guildStaff,
-                    role: user.role.name,
-                    photos: photos
+                    guildStaff: user.guildStaff,
+                    photos: photos,
+                    status: user.status,
+                    role: user.role,
                 });
                 console.log(this.state)
             }
@@ -108,10 +115,10 @@ class User extends Component {
             gender: this.state.gender,
             login: this.state.login,
             password: this.state.password,
-            phone_number: this.state.phone_number,
+            phoneNumber: this.state.phoneNumber,
             surname: this.state.surname,
             adventurer: this.state.adventurer,
-            guild_staff: this.state.guild_staff,
+            guildStaff: this.state.guildStaff,
             role: this.state.role,
         };
 
@@ -159,20 +166,23 @@ class User extends Component {
     };
 
     updateUser = (event) => {
-        event.preventDefault();
         console.log("3")
         console.log(this.state)
         const user = {
             id: this.state.id,
-            balance: this.state.balance,
-            birthday: this.state.birthday,
-            email: this.state.email,
-            firstname: this.state.firstname,
-            gender: this.state.gender,
             login: this.state.login,
             password: this.state.password,
-            phone_number: this.state.phone_number,
+            birthday: this.state.birthday,
+            gender: this.state.gender,
             surname: this.state.surname,
+            email: this.state.email,
+            firstname: this.state.firstname,
+            balance: this.state.balance,
+            phoneNumber: this.state.phoneNumber,
+            status: this.state.status,
+            adventurer: this.state.adventurer,
+            guildStaff: this.state.guildStaff,
+            role: this.state.role,
         };
         this.props.updateUser(user);
         setTimeout(() => {
@@ -183,7 +193,6 @@ class User extends Component {
                 this.setState({ show: false });
             }
         }, 2000);
-        this.setState(this.initialState);
     };
 
     userChange = (event) => {
@@ -192,6 +201,20 @@ class User extends Component {
         });
     };
 
+    passTheTest = () => {
+        this.state.status = "TEST"
+        this.updateUser()
+    }
+
+    profileChanges = () => {
+        this.state.current = "PROFILE"
+        this.setState({change: true})
+    }
+    profileSave = () => {
+        this.setState({change: false})
+        this.updateUser()
+    }
+
 
     userList = () => {
         return this.props.history.push("/adventurer");
@@ -199,6 +222,8 @@ class User extends Component {
 
 
     render() {
+        const profile = <Profile user={this.state}/>
+
         return (
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
@@ -209,7 +234,7 @@ class User extends Component {
                     <Row>
                         <Col md = {4}>
                             <Card.Title className={"center-75"}>Photos</Card.Title>
-                            {this.state.id ?
+                            {!this.state.change?
                                 <div>
                                     <Corousel images = {this.state.picture}/>
                                 </div> :
@@ -217,6 +242,23 @@ class User extends Component {
                                     {...this.state.upload}
                                     handleChange={this.handleChange}
                                 />}
+                            {this.state.status === "USER"?
+                                <Button className={"w-100"}
+                                        onClick={() => this.passTheTest()}>
+                                    Пройти тестирование
+                                </Button>:""
+                            }
+                            <p/>
+                            {!this.state.change?
+                                <Button className={"w-100"}
+                                        onClick={() => this.profileChanges()}>
+                                    Редактировать профиль
+                                </Button>:
+                                <Button className={"w-100 btn-success"}
+                                        onClick={() => this.profileSave()}>
+                                    Сохранить
+                                </Button>
+                            }
                         </Col>
                         <Col>
                             <Card
@@ -228,36 +270,25 @@ class User extends Component {
                                 <Card.Header>
                                     <Nav justify variant="tabs" className={"text-success"} variant="pills" defaultActiveKey="#first">
                                         <Nav.Item>
-                                            <Nav.Link href="#profile">Profile</Nav.Link>
+                                            <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link href="#completed">Completed tasks</Nav.Link>
+                                            <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link href="#posted">Posted tasks</Nav.Link>
+                                            <Nav.Link href="#posted" disabled={this.state.change} onSelect={() => this.state.current = "POSTED"}>Posted tasks</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link href="#statistics">Statistics</Nav.Link>
+                                            <Nav.Link href="#statistics" disabled={this.state.change} onSelect={() => this.state.current = "STATISTICS"} >Statistics</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
                                 </Card.Header>
                                 <Card.Body>
-                                    <Profile user={this.state}/>
+                                    {this.state.current === "PROFILE"? profile: ""}
+                                    {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
+                                    {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
+                                    {this.state.current === "STATISTICS"? "STATISTICS": ""}
                                 </Card.Body>
-                                <Card.Footer style={{ textAlign: "right" }}>
-                                    {/*<Button size="sm" variant={this.state.adventurerLogin!==this.state.username? "success" : "danger"} type="submit">*/}
-                                    {/*    <FontAwesomeIcon icon={faSave} />{" "}*/}
-                                    {/*    {this.state.adventurerLogin!==this.state.username? "To accept" : "Refuse"}*/}
-                                    {/*</Button>{" "}*/}
-                                    {/*<Button*/}
-                                    {/*    size="sm"*/}
-                                    {/*    variant="info"*/}
-                                    {/*    type="button"*/}
-                                    {/*    onClick={() => this.userList()}*/}
-                                    {/*>*/}
-                                    {/*    <FontAwesomeIcon icon={faList} /> Adventurer List*/}
-                                    {/*</Button>*/}
-                                </Card.Footer>
                             </Card>
                         </Col>
                     </Row>

@@ -37,6 +37,8 @@ class UsersControllerImpl(private val userService: UserServiceImpl) : Resource<U
     }
 
     override fun update(user: User): ResponseEntity<User?> {
+        System.out.println("test");
+        System.out.println(user);
         return ResponseEntity.ok(userService.saveOrUpdate(user))
     }
 

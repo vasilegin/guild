@@ -1,7 +1,7 @@
 import {Form, Button} from "react-bootstrap";
 import {fetchUser, saveUser, updateUser} from "../../services/user/adventurer/userActions";
 import {connect} from "react-redux";
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 class CardForm extends Component {
 
@@ -11,32 +11,21 @@ class CardForm extends Component {
     }
 
     initialState = {
-        id: "",
-        balance: null,
+        id: null,
+        balance: 0,
         birthday: null,
         firstname: null,
         gender: null,
         login: null,
         rank: null,
-        password: "",
-        phone_number: null,
+        password: null,
+        phoneNumber: null,
         surname: null,
         adventurer: null,
-        guild_staff: null,
+        guildStaff: null,
         role: null,
-        money: 0,
-
-        change: false,
-
-        show: false,
-        picture: [],
-        upload: {
-            pictures: [],
-            maxFileSize: 5242880,
-            imgExtension: [".jpg", ".png"],
-            defaultImages: [
-            ]
-        }
+        status: null,
+        amount: 0
     };
 
     componentDidMount() {
@@ -64,10 +53,11 @@ class CardForm extends Component {
                     gender: user.gender,
                     login: user.login,
                     password: user.password,
-                    phone_number: user.phoneNumber,
+                    phoneNumber: user.phoneNumber,
                     adventurer: user.adventurer,
-                    guild_staff: user.guildStaff,
-                    role: user.role.name,
+                    guildStaff: user.guildStaff,
+                    role: user.role,
+                    status: user.status,
                     photos: photos
                 });
                 console.log(this.state)
@@ -81,22 +71,10 @@ class CardForm extends Component {
 
     submitUser = (event) => {
         event.preventDefault();
-        console.log("2")
         console.log(this.state)
         const user = {
             id: this.state.id,
             balance: this.state.balance,
-            birthday: this.state.birthday,
-            email: this.state.email,
-            firstname: this.state.firstname,
-            gender: this.state.gender,
-            login: this.state.login,
-            password: this.state.password,
-            phone_number: this.state.phone_number,
-            surname: this.state.surname,
-            adventurer: this.state.adventurer,
-            guild_staff: this.state.guild_staff,
-            role: this.state.role,
         };
 
         this.props.saveUser(user);
@@ -112,34 +90,11 @@ class CardForm extends Component {
     };
 
     UpBalanceUser = () => {
-
-        this.state.balance += this.state.money
-        this.updateUser()
+        this.state.balance = Number(this.state.balance) + Number(this.state.amount)
+        this.upUser()
     };
 
-    handleChange = files => {
-        const { pictures } = this.state.upload;
-        console.log({ pictures, files });
-
-        this.setState(
-            {
-                ...this.state,
-                upload: {
-                    ...this.state.upload,
-                    pictures: [...files]
-                }
-            },
-            () => {
-                console.log("It was added!");
-            }
-        );
-        console.log("77");
-        console.log({ ...this.state});
-    };
-
-    updateUser = () => {
-        console.log("3")
-        console.log(this.state)
+    upUser = () => {
         const user = {
             id: this.state.id,
             balance: this.state.balance,
@@ -149,8 +104,12 @@ class CardForm extends Component {
             gender: this.state.gender,
             login: this.state.login,
             password: this.state.password,
-            phone_number: this.state.phone_number,
+            phoneNumber: this.state.phoneNumber,
             surname: this.state.surname,
+            status: this.state.status,
+            role: this.state.role,
+            adventurer: this.state.adventurer,
+            guildStaff: this.state.guildStaff
         };
         this.props.updateUser(user);
         setTimeout(() => {
@@ -168,14 +127,7 @@ class CardForm extends Component {
         this.setState({
             [event.target.name]: event.target.value,
         });
-        console.log(this.state)
     };
-
-
-    userList = () => {
-        return this.props.history.push("/adventurer");
-    };
-
 
     render() {
         return (
@@ -189,10 +141,10 @@ class CardForm extends Component {
                             <Form.Group>
                                 <Form.Control
                                     type="number"
-                                    id="money"
-                                    data-testid="money"
-                                    name="money"
-                                    value={this.state.money}
+                                    id="amount"
+                                    data-testid="amount"
+                                    name="amount"
+                                    value={this.state.amount}
                                     onChange={this.userChange}
                                     placeholder="Amount Of Money"
                                 />
@@ -201,7 +153,6 @@ class CardForm extends Component {
                                 size={"block"}
                                 data-testid="executeButton"
                                 id="executeButton"
-                                type="submit"
                                 onClick={() => this.UpBalanceUser()}
                             >
                                 Execute

@@ -7,7 +7,7 @@ export const saveUser = (user) => {
       type: BT.SAVE_USER_REQUEST,
     });
     axios
-      .post("http://localhost:8081/rest/users", user)
+      .post("http://localhost:8081/rest/users/", user)
       .then((response) => {
         dispatch(userSuccess(response.data));
       })
@@ -35,12 +35,13 @@ export const fetchUser = (userId) => {
 };
 
 export const updateUser = (user) => {
+  console.log("up")
   return (dispatch) => {
     dispatch({
       type: BT.UPDATE_USER_REQUEST,
     });
     axios
-      .put("http://localhost:8081/rest/users", user)
+      .put("http://localhost:8081/rest/users/", user)
       .then((response) => {
         dispatch(userSuccess(response.data));
       })

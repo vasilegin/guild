@@ -10,7 +10,7 @@ import {
 import {Card, Row, ListGroup, Button} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faDragon, faList, faSave
+    faDragon, faEdit, faList, faSave
 } from "@fortawesome/free-solid-svg-icons";
 import UploadComponent from "../Images/Upload";
 import Corousel from "../Images/Corousel";
@@ -223,6 +223,10 @@ class JobDetail extends Component {
         this.setState(this.initialState);
     };
 
+    edit = () => {
+        return this.props.history.push("/edit/" + this.state.id);
+    }
+
     jobChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
@@ -296,8 +300,18 @@ class JobDetail extends Component {
                     </Row>
                 </Card.Body>
                 <Card.Footer style={{ textAlign: "right" }}>
+                    {this.state.status === "Created" & this.state.customerId === this.state.userId?
+                        <Button
+                            size="sm"
+                            onClick={this.state.adventurerLogin!==this.state.username? () => this.handlerAccept() : () => this.handlerRefuse()}
+                            variant="info"
+                            type="button"
+                            onClick={() => this.edit()}>
+                            <FontAwesomeIcon icon={faEdit} />{" "}
+                            Edit
+                        </Button> :""}
                     <Button
-                        hidden = {this.state.userStatus==="ADVENTURER" & (this.state.status === "Published" | this.state.status ==="Execution") ? false:true}
+                        hidden = {this.state.customerId !== this.state.userId & this.state.userStatus==="ADVENTURER" & (this.state.status === "Published" | this.state.status ==="Execution") ? false:true}
                         size="sm"
                         onClick={this.state.adventurerLogin!==this.state.username? () => this.handlerAccept() : () => this.handlerRefuse()}
                         variant={this.state.adventurerLogin!==this.state.username? "success" : "danger"}
