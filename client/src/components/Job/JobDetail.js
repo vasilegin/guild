@@ -7,7 +7,7 @@ import {
     updateJob,
 } from "../../services/index";
 
-import {Card, Row, ListGroup, Button} from "react-bootstrap";
+import {Card, Row, ListGroup, Button, Col, Form} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faDragon, faEdit, faList, faSave
@@ -31,7 +31,7 @@ class JobDetail extends Component {
         title: "",
         description: "",
         status: "",
-        rank: "",
+        rank: "F",
         reward: "",
         location: "",
         dateCreated: "",
@@ -222,6 +222,12 @@ class JobDetail extends Component {
         this.setState(this.initialState);
     };
 
+    estimate = () => {
+        this.state.status = "Published"
+        this.updateJob()
+    }
+
+
     edit = () => {
         return this.props.history.push("/edit/" + this.state.id);
     }
@@ -230,6 +236,7 @@ class JobDetail extends Component {
         this.setState({
             [event.target.name]: event.target.value,
         });
+        console.log(event.target.value)
     };
 
     render() {
@@ -277,12 +284,35 @@ class JobDetail extends Component {
                                     {this.state.status}
                                 </Card.Text>
                             </ListGroup.Item>
-                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                <Card.Title>Rank</Card.Title>
-                                <Card.Text>
-                                    {this.state.rank}
-                                </Card.Text>
-                            </ListGroup.Item>
+                            {this.state.status === "Created" & this.state.role === "ADMIN"?
+                                <Form.Row className={"text-success bg-dark"}>
+                                    <Form.Group as={Col} controlId="formGridRank">
+                                        <Form.Label>Rank</Form.Label>
+                                        <Form.Control as="select"
+                                            required
+                                            name="rank"
+                                            value={this.state.rank}
+                                            onChange={this.jobChange}
+                                        >
+                                            <option value="F">F</option>
+                                            <option value="E">E</option>
+                                            <option value="D">D</option>
+                                            <option value="B">B</option>
+                                            <option value="A">A</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A++">A++</option>
+                                            <option value="S">S</option>
+                                            <option value="SS">SS</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form.Row>:
+                                <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
+                                    <Card.Title>Rank</Card.Title>
+                                    <Card.Text>
+                                        {this.state.rank}
+                                    </Card.Text>
+                                </ListGroup.Item>
+                            }
                             <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
                                 <Card.Title>Reward</Card.Title>
                                 <Card.Text>
@@ -299,16 +329,24 @@ class JobDetail extends Component {
                     </Row>
                 </Card.Body>
                 <Card.Footer style={{ textAlign: "right" }}>
+                    {this.state.status === "Created" & this.state.role === "ADMIN"?
+                        <Button
+                            size="sm"
+                            variant="success"
+                            type="button"
+                            onClick={() => this.estimate()}>
+                            <FontAwesomeIcon icon={faSave} />{" "}
+                            Rate
+                        </Button> :""}{" "}
                     {this.state.status === "Created" & this.state.customerId === this.state.userId?
                         <Button
                             size="sm"
-                            onClick={this.state.adventurerLogin!==this.state.username? () => this.handlerAccept() : () => this.handlerRefuse()}
                             variant="info"
                             type="button"
                             onClick={() => this.edit()}>
                             <FontAwesomeIcon icon={faEdit} />{" "}
                             Edit
-                        </Button> :""}
+                        </Button> :""}{" "}
                     <Button
                         hidden = {this.state.customerId !== this.state.userId & this.state.userStatus==="ADVENTURER" & (this.state.status === "Published" | this.state.status ==="Execution") ? false:true}
                         size="sm"

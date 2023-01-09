@@ -15,7 +15,7 @@ export const JobComp = ({job}) => {
                         <Corousel images = {photos}/>
                     </Col>
                     <Col md = {8}>
-                        <Link to={"job/" + job.id} style={{color: 'white'}} className="nav-link h-100" preventScrollReset={true}>
+                        <Link to={"/job/" + job.id} style={{color: 'white'}} className="nav-link h-100" preventScrollReset={true}>
                             <Row>
                                 <h3>{job.title}</h3>
                             </Row>

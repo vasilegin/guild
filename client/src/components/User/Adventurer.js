@@ -19,6 +19,9 @@ import {
 import MyToast from "../MyToast";
 import UploadComponent from "../Images/Upload";
 import Corousel from "../Images/Corousel";
+import JobListForUser from "../Job/JobListForUser";
+import Gist from "../Utils/Gist";
+import {Profile} from "./Profile";
 
 class Adventurer extends Component {
 
@@ -42,6 +45,8 @@ class Adventurer extends Component {
         guild_staff: "",
         role: "",
         change: false,
+        jobs: [],
+        orders: [],
 
         show: false,
         picture: [],
@@ -84,9 +89,11 @@ class Adventurer extends Component {
                     gender: user.gender,
                     login: user.login,
                     password: user.password,
-                    phone_number: user.phoneNumber,
+                    phoneNumber: user.phoneNumber,
                     adventurer: user.adventurer,
-                    guild_staff: user.guildStaff,
+                    guildStaff: user.guildStaff,
+                    jobs: user.jobs,
+                    orders: user.orders,
                     role: user.role.name,
                     photos: photos
                 });
@@ -112,7 +119,7 @@ class Adventurer extends Component {
             gender: this.state.gender,
             login: this.state.login,
             password: this.state.password,
-            phone_number: this.state.phone_number,
+            phoneNumber: this.state.phoneNumber,
             surname: this.state.surname,
             adventurer: this.state.adventurer,
             guild_staff: this.state.guild_staff,
@@ -170,7 +177,7 @@ class Adventurer extends Component {
             gender: this.state.gender,
             login: this.state.login,
             password: this.state.password,
-            phone_number: this.state.phone_number,
+            phoneNumber: this.state.phoneNumber,
             surname: this.state.surname,
         };
         this.props.updateUser(user);
@@ -198,6 +205,9 @@ class Adventurer extends Component {
 
 
     render() {
+        const profile = <Profile user={this.state}/>
+        const posted = this.state.orders.length
+        const completed = this.state.jobs.length
         return (
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
@@ -227,54 +237,70 @@ class Adventurer extends Component {
                                 <Card.Header>
                                     <Nav justify variant="tabs" className={"text-success"} variant="pills" defaultActiveKey="#first">
                                         <Nav.Item>
-                                            <Nav.Link href="#profile">Profile</Nav.Link>
+                                            <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
+                                        </Nav.Item>
+                                        {/*<Nav.Item>*/}
+                                        {/*    <Nav.Link href="#current" disabled={this.state.change} onSelect={() => this.state.current = "CURRENT"}>Current tasks</Nav.Link>*/}
+                                        {/*</Nav.Item>*/}
+                                        <Nav.Item>
+                                            <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link href="#statistics">Statistics</Nav.Link>
+                                            <Nav.Link href="#posted" disabled={this.state.change} onSelect={() => this.state.current = "POSTED"}>Posted tasks</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link href="#statistics" disabled={this.state.change} onSelect={() => this.state.current = "STATISTICS"} >Statistics</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
                                 </Card.Header>
                                 <Card.Body>
-                                    <Row style={{marginTop: "20px"}}className={"margin-top: 20px"}>
-                                        <ListGroup className={"bg-dark text-white w-100"}>
-                                            <ListGroup.Item className={"border-List  bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Login: {this.state.login}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Rank: {this.state.adventurer.rank}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Firstname and Surname: {this.state.firstname} {this.state.surname}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Gender: {this.state.gender}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Birthday: {this.state.birthday}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Email: {this.state.email}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>
-                                                <Card.Text>
-                                                    Phone: {this.state.phone_number}
-                                                </Card.Text>
-                                            </ListGroup.Item>
-                                        </ListGroup>
-                                    </Row>
+                                    {this.state.current === "PROFILE"? profile: ""}
+                                    {this.state.current === "CURRENT"? <JobListForUser status={"CURRENT"} id={this.state.id}/>: ""}
+                                    {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
+                                    {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
+                                    {this.state.current === "STATISTICS"? <Gist posted={posted} completed={completed}/>: ""}
                                 </Card.Body>
+                                {/*<Card.Body>*/}
+                                {/*    <Row style={{marginTop: "20px"}}className={"margin-top: 20px"}>*/}
+                                {/*        <ListGroup className={"bg-dark text-white w-100"}>*/}
+                                {/*            <ListGroup.Item className={"border-List  bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Login: {this.state.login}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Rank: {this.state.adventurer.rank}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Firstname and Surname: {this.state.firstname} {this.state.surname}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Gender: {this.state.gender}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Birthday: {this.state.birthday}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Email: {this.state.email}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
+                                {/*                <Card.Text>*/}
+                                {/*                    Phone: {this.state.phoneNumber}*/}
+                                {/*                </Card.Text>*/}
+                                {/*            </ListGroup.Item>*/}
+                                {/*        </ListGroup>*/}
+                                {/*    </Row>*/}
+                                {/*</Card.Body>*/}
                             </Card>
                         </Col>
                     </Row>

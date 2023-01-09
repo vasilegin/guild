@@ -58,6 +58,7 @@ class Job extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props)
     const jobId = +this.props.match.params.id;
     if (jobId) {
       this.findJobById(jobId);
@@ -266,7 +267,7 @@ class Job extends Component {
                     autoComplete="off"
                     type="text"
                     name="title"
-                    value={t}
+                    value={this.state.title}
                     onChange={this.jobChange}
                     className={"bg-dark text-white"}
                     placeholder="Enter Job Title"
@@ -283,7 +284,7 @@ class Job extends Component {
                       rows ={10}
                       type="text"
                       name="description"
-                      value={d}
+                      value={this.state.description}
                       onChange={this.jobChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Job Description"
@@ -299,7 +300,7 @@ class Job extends Component {
                     autoComplete="off"
                     type="text"
                     name="location"
-                    value={l}
+                    value={this.state.location}
                     onChange={this.jobChange}
                     className={"bg-dark text-white"}
                     placeholder="Enter Job Location"
@@ -314,7 +315,7 @@ class Job extends Component {
                       autoComplete="off"
                       type="number"
                       name="reward"
-                      value={r}
+                      value={this.state.reward}
                       onChange={this.jobChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Job Reward"
