@@ -19,7 +19,7 @@ interface Resource<T> {
     fun findById(@PathVariable id: Long?): ResponseEntity<Optional<T>>
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
-    fun save(@RequestBody t: T): ResponseEntity<T?>
+    fun save(@RequestBody t: T): Any
 
     @PutMapping(consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
     fun update(@RequestBody t: T): ResponseEntity<T?>

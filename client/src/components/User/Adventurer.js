@@ -32,21 +32,30 @@ class Adventurer extends Component {
 
     initialState = {
         id: "",
-        balance: "",
+        balance: 0,
         birthday: "",
         firstname: "",
         gender: "",
         login: "",
         rank: "",
         password: "",
-        phone_number: "",
+        phoneNumber: "",
         surname: "",
-        adventurer: "",
-        guild_staff: "",
+        adventurer:{
+            role: "",
+            rank: "F",
+            weapon: "",
+        },
+        guildStaff: "",
         role: "",
         change: false,
         jobs: [],
         orders: [],
+        userRole: this.props.role,
+        userName: this.props.username,
+        userStatus: this.props.status,
+        userId: this.props.id,
+        current: "PROFILE",
 
         show: false,
         picture: [],
@@ -61,7 +70,6 @@ class Adventurer extends Component {
 
     componentDidMount() {
         const userId = +this.props.match.params.id;
-        console.log(userId)
         if (userId) {
             this.findUserById(userId);
         }
@@ -70,6 +78,7 @@ class Adventurer extends Component {
 
 
     findUserById = (userId) => {
+        console.log(this.props)
         this.props.fetchUser(userId);
         setTimeout(() => {
             let user = this.props.userObject.users;
@@ -90,13 +99,17 @@ class Adventurer extends Component {
                     login: user.login,
                     password: user.password,
                     phoneNumber: user.phoneNumber,
-                    adventurer: user.adventurer,
+                    // adventurer: user.adventurer,
                     guildStaff: user.guildStaff,
                     jobs: user.jobs,
                     orders: user.orders,
-                    role: user.role.name,
+                    role: user.role,
+                    status: user.status,
                     photos: photos
                 });
+                if (user.adventurer !== null){
+                    this.state.adventurer = user.adventurer
+                }
                 console.log(this.state)
             }
         }, 1000);
@@ -122,7 +135,7 @@ class Adventurer extends Component {
             phoneNumber: this.state.phoneNumber,
             surname: this.state.surname,
             adventurer: this.state.adventurer,
-            guild_staff: this.state.guild_staff,
+            guildStaff: this.state.guildStaff,
             role: this.state.role,
         };
 
@@ -165,7 +178,6 @@ class Adventurer extends Component {
     };
 
     updateUser = (event) => {
-        event.preventDefault();
         console.log("3")
         console.log(this.state)
         const user = {
@@ -179,6 +191,10 @@ class Adventurer extends Component {
             password: this.state.password,
             phoneNumber: this.state.phoneNumber,
             surname: this.state.surname,
+            adventurer: this.state.adventurer,
+            guildStaff: this.state.guildStaff,
+            role: this.state.role,
+            status: this.state.status
         };
         this.props.updateUser(user);
         setTimeout(() => {
@@ -191,6 +207,11 @@ class Adventurer extends Component {
         }, 2000);
         this.setState(this.initialState);
     };
+
+    attestation = () =>{
+        this.state.status = "ADVENTURER"
+        this.updateUser()
+    }
 
     userChange = (event) => {
         this.setState({
@@ -205,14 +226,15 @@ class Adventurer extends Component {
 
 
     render() {
-        const profile = <Profile user={this.state}/>
+        const rate = this.state.userRole === "ADMIN" & this.state.status === "TEST"
+        const profile = <Profile user={this.state} rate ={rate}/>
         const posted = this.state.orders.length
         const completed = this.state.jobs.length
         return (
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
                     <FontAwesomeIcon icon={faDragon} />{" "}
-                    Job
+                    User
                 </Card.Header>
                 <Card.Body>
                     <Row>
@@ -234,73 +256,40 @@ class Adventurer extends Component {
                                 text='white'
                                 style={{ width: '18rem' }}
                                 className={"border-secondary bg-dark text-white"} style={{border: "#17a2b8"}}>
-                                <Card.Header>
-                                    <Nav justify variant="tabs" className={"text-success"} variant="pills" defaultActiveKey="#first">
-                                        <Nav.Item>
-                                            <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
-                                        </Nav.Item>
-                                        {/*<Nav.Item>*/}
-                                        {/*    <Nav.Link href="#current" disabled={this.state.change} onSelect={() => this.state.current = "CURRENT"}>Current tasks</Nav.Link>*/}
-                                        {/*</Nav.Item>*/}
-                                        <Nav.Item>
-                                            <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link href="#posted" disabled={this.state.change} onSelect={() => this.state.current = "POSTED"}>Posted tasks</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link href="#statistics" disabled={this.state.change} onSelect={() => this.state.current = "STATISTICS"} >Statistics</Nav.Link>
-                                        </Nav.Item>
-                                    </Nav>
-                                </Card.Header>
-                                <Card.Body>
-                                    {this.state.current === "PROFILE"? profile: ""}
-                                    {this.state.current === "CURRENT"? <JobListForUser status={"CURRENT"} id={this.state.id}/>: ""}
-                                    {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
-                                    {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
-                                    {this.state.current === "STATISTICS"? <Gist posted={posted} completed={completed}/>: ""}
-                                </Card.Body>
-                                {/*<Card.Body>*/}
-                                {/*    <Row style={{marginTop: "20px"}}className={"margin-top: 20px"}>*/}
-                                {/*        <ListGroup className={"bg-dark text-white w-100"}>*/}
-                                {/*            <ListGroup.Item className={"border-List  bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Login: {this.state.login}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Rank: {this.state.adventurer.rank}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Firstname and Surname: {this.state.firstname} {this.state.surname}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Gender: {this.state.gender}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Birthday: {this.state.birthday}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Email: {this.state.email}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*            <ListGroup.Item className={"border-List bg-dark text-white w-100"}>*/}
-                                {/*                <Card.Text>*/}
-                                {/*                    Phone: {this.state.phoneNumber}*/}
-                                {/*                </Card.Text>*/}
-                                {/*            </ListGroup.Item>*/}
-                                {/*        </ListGroup>*/}
-                                {/*    </Row>*/}
-                                {/*</Card.Body>*/}
+                                {this.state.userRole === "ADMIN" & this.state.status === "TEST"?
+                                    <Card.Body>
+                                        {profile}
+                                    </Card.Body>
+                                    :
+                                    <div>
+                                        <Card.Header>
+                                            <Nav justify variant="tabs" className={"text-success"} variant="pills" defaultActiveKey="#first">
+                                                <Nav.Item>
+                                                    <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
+                                                </Nav.Item>
+                                                {/*<Nav.Item>*/}
+                                                {/*    <Nav.Link href="#current" disabled={this.state.change} onSelect={() => this.state.current = "CURRENT"}>Current tasks</Nav.Link>*/}
+                                                {/*</Nav.Item>*/}
+                                                <Nav.Item>
+                                                    <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link href="#posted" disabled={this.state.change} onSelect={() => this.state.current = "POSTED"}>Posted tasks</Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link href="#statistics" disabled={this.state.change} onSelect={() => this.state.current = "STATISTICS"} >Statistics</Nav.Link>
+                                                </Nav.Item>
+                                            </Nav>
+                                        </Card.Header>
+                                        <Card.Body>
+                                            {this.state.current === "PROFILE"? profile: ""}
+                                            {this.state.current === "CURRENT"? <JobListForUser status={"CURRENT"} id={this.state.id}/>: ""}
+                                            {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
+                                            {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
+                                            {this.state.current === "STATISTICS"? <Gist posted={posted} completed={completed}/>: ""}
+                                        </Card.Body>
+                                    </div>
+                                }
                             </Card>
                         </Col>
                     </Row>
@@ -310,6 +299,15 @@ class Adventurer extends Component {
                     {/*    <FontAwesomeIcon icon={faSave} />{" "}*/}
                     {/*    {this.state.adventurerLogin!==this.state.username? "To accept" : "Refuse"}*/}
                     {/*</Button>{" "}*/}
+                    {this.state.userRole === "ADMIN" & this.state.status === "TEST"?
+                        <Button
+                            size="sm"
+                            variant="success"
+                            type="submit"
+                            onClick={() => this.attestation()}
+                        >
+                            <FontAwesomeIcon icon={faSave} /> Estimate
+                        </Button>:""}{" "}
                     <Button
                         size="sm"
                         variant="info"

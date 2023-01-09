@@ -59,7 +59,12 @@ const App = () => {
               <Route path="/adventurer" exact component={AdventurerList} />
               <Route path="/rank" exact component={RankList} />
               <Route path="/quiz" exact component={TestList} />
-              <Route path="/user/:id" exact component={Adventurer} />
+              <Route path="/user/:id" exact render={(props) =>
+                  (<Adventurer{...props}
+                             role={auth.role}
+                             username={auth.username}
+                             id={auth.id}
+                             status={auth.status}/>)} />
               <Route path="/profile" exact render={(props) =>
                   (<User{...props} id={auth.id}/>)}
               />

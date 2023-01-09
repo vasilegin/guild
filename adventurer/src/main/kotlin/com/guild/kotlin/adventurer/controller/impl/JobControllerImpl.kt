@@ -3,13 +3,17 @@ package com.guild.kotlin.adventurer.controller.impl
 
 import com.guild.kotlin.adventurer.controller.Resource
 import com.guild.kotlin.adventurer.entities.Job
+import com.guild.kotlin.adventurer.entities.User
+import com.guild.kotlin.adventurer.repo.UserRepository
 import com.guild.kotlin.adventurer.service.IPageService
 import com.guild.kotlin.adventurer.service.IService
 import com.guild.kotlin.adventurer.service.impl.JobServiceImpl
+import com.guild.kotlin.adventurer.service.impl.UserServiceImpl
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -18,7 +22,7 @@ import java.util.*
 @RestController
 @RequestMapping("/jobs")
 @CrossOrigin(origins = ["http://localhost:3000"])
-class JobControllerImpl(private val jobService: IService<Job>, private val jobPageService: IPageService<Job>, private val jobServiceImpl: JobServiceImpl) : Resource<Job> {
+class JobControllerImpl(private val jobService: IService<Job>, private val jobPageService: IPageService<Job>, private val jobServiceImpl: JobServiceImpl, private val  userRepository: UserRepository) : Resource<Job> {
 
     @GetMapping("/adventurer")
     fun findAll(pageable: Pageable,
@@ -73,13 +77,21 @@ class JobControllerImpl(private val jobService: IService<Job>, private val jobPa
         return ResponseEntity.ok(jobService.findById(id))
     }
 
-    override fun save(job: Job): ResponseEntity<Job?> {
+    override fun save(job: Job): Any {
         System.out.println(job);
-        return ResponseEntity.ok(jobService.saveOrUpdate(job))
+        if (job.customer!!.balance!! < job.reward) {
+            System.out.println(500);
+            return ResponseEntity.notFound()
+        }
+        else {
+            var user: User = userRepository.findById(job.customer!!.id!!).get()
+            user!!.balance = user!!.balance!! - job.reward!!
+            userRepository.saveAndFlush(user)
+            return ResponseEntity.ok(jobService.saveOrUpdate(job))
+        }
     }
 
     override fun update(job: Job): ResponseEntity<Job?> {
-        System.out.println(job);
         return ResponseEntity.ok(jobService.saveOrUpdate(job))
     }
 

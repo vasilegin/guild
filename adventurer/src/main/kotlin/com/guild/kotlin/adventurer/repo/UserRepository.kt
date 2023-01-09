@@ -8,6 +8,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import java.util.*
 
 interface UserRepository : JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+
+    fun findAllByLoginContainingAndStatus(pageable: Pageable, login: String?, status: String): Page<User>?
+
+    fun findAllByStatus(pageable: Pageable, status: String): Page<User>?
     fun findByLogin(login: String?): User?
 
     fun findAllByAdventurerIsNotNull() : List<User>?

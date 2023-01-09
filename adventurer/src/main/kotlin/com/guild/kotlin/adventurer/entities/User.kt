@@ -59,7 +59,7 @@ open class User {
     @Column(name = "Phone_number")
     open var phoneNumber: String? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade= arrayOf(CascadeType.ALL))
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "users")
     @JoinColumn(name = "Adventurer_id")
     open var adventurer: Adventurer? = null

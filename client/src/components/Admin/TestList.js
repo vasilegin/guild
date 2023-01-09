@@ -26,18 +26,18 @@ class AdventurerList extends Component {
       users: [],
       search: "",
       searchRank: "",
-      searchStatus : 'Test',
+      searchStatus : 'TEST',
       currentPage: 1,
       usersPerPage: 10,
-      sortDir: "firstname",
+      sortDir: "login",
     };
   }
 
   sortData = () => {
     setTimeout(() => {
-      this.state.sortDir === "firstname"
+      this.state.sortDir === "login"
         ? this.setState({ sortDir: "id" })
-        : this.setState({ sortDir: "firstname" });
+        : this.setState({ sortDir: "login" });
       this.findAllAdventurer(this.state.currentPage);
     }, 500);
   };
@@ -57,12 +57,13 @@ class AdventurerList extends Component {
     }
     axios
       .get(
-        "http://localhost:8081/rest/adventurer?pageNumber=" +
+        "http://localhost:8081/rest/adventurer/test?pageNumber=" +
           currentPage +
           "&pageSize=" +
           this.state.usersPerPage +
           "&sort=id&sortDir=" +
-          this.state.sortDir
+          this.state.sortDir +
+          this.state.searchStatusI
       )
       .then((response) => response.data)
       .then((data) => {
@@ -184,10 +185,10 @@ class AdventurerList extends Component {
     }
     axios
         .get(
-            "http://localhost:8081/rest/adventurer/search" +
+            "http://localhost:8081/rest/adventurer/test" +
             "?" +
             this.state.searchLoginI +
-            this.state.searchRankI +
+            // this.state.searchRankI +
             this.state.searchStatusI +
             "page=" +
             currentPage +
@@ -210,6 +211,7 @@ class AdventurerList extends Component {
     const userList = users.map(row=>{
         return <UserComp
             user = {row}
+            rate = "TEST"
             key = {row.id}
         />
       })

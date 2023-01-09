@@ -10,6 +10,7 @@ export const saveJob = (job) => {
       .post("http://localhost:8081/rest/jobs", job)
       .then((response) => {
         dispatch(jobSuccess(response.data));
+        console.log(response)
       })
       .catch((error) => {
         dispatch(jobFailure(error));
@@ -41,6 +42,7 @@ export const updateJob = (job) => {
     axios
       .put("http://localhost:8081/rest/jobs", job)
       .then((response) => {
+        console.log(response)
         dispatch(jobSuccess(response.data));
       })
       .catch((error) => {

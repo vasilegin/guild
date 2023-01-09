@@ -25,9 +25,9 @@ class JobDetail extends Component {
 
     initialState = {
         id: "",
-        adventurer_id: "",
-        customer_id: "",
-        group_id: "",
+        adventurerId: "",
+        customerId: "",
+        groupId: "",
         title: "",
         description: "",
         status: "",
@@ -104,7 +104,7 @@ class JobDetail extends Component {
                 }
                 if (job.group != null){
                     this.setState({
-                        group_id: job.group.id
+                        groupId: job.group.id
                     })
                 }
                 console.log(this.state)

@@ -45,4 +45,12 @@ class AdventurerUserServiceImpl(private val userRepository: UserRepository) {
     fun saveOrUpdate(user: User): User {
         return userRepository.saveAndFlush(user)
     }
+
+    fun findForTestByLogin(pageable: Pageable, login: String, status: String): Page<User>? {
+        return userRepository.findAllByLoginContainingAndStatus(pageable, login, status)
+    }
+
+    fun findForTestByStatus(pageable: Pageable, status: String): Page<User>? {
+        return userRepository.findAllByStatus(pageable, status)
+    }
 }

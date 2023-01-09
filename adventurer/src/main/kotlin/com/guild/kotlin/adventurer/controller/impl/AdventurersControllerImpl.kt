@@ -43,6 +43,15 @@ class AdventurersControllerImpl(private val userPageService: AdventurerUserServi
         return ResponseEntity.ok(userPageService.findAllAdv(pageable))
     }
 
+    @GetMapping("/test")
+    fun findAll(pageable: Pageable, @RequestParam login: String?, @RequestParam status: String): ResponseEntity<Page<User>> {
+        if (login != null){
+            return ResponseEntity.ok(userPageService.findForTestByLogin(pageable, login, status))
+        }
+        return ResponseEntity.ok(userPageService.findForTestByStatus(pageable, status))
+    }
+
+
     @GetMapping("{id}")
     override fun findById(@PathVariable id: Long?): ResponseEntity<Optional<User>> {
         return ResponseEntity.ok(userPageService.findById(id))

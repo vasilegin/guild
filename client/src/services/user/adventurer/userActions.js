@@ -18,7 +18,6 @@ export const saveUser = (user) => {
 };
 
 export const fetchUser = (userId) => {
-  console.log("fetchUser")
   return (dispatch) => {
     dispatch({
       type: BT.FETCH_USER_REQUEST,

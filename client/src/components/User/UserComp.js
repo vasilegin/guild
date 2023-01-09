@@ -22,9 +22,11 @@ export const UserComp = ({user}) => {
                             <Row>
                                 <h4>{user.firstname} {user.surname}</h4>
                             </Row>
-                            <Row>
-                                <h5>Rank: {user.adventurer.rank}</h5>
-                            </Row>
+                            {user.adventurer?
+                                <Row>
+                                    <h5>Rank: {user.adventurer.rank}</h5>
+                                </Row>
+                                :""}
                             <Row>
                                 <h5>Gender: {user.gender}</h5>
                             </Row>
@@ -32,7 +34,7 @@ export const UserComp = ({user}) => {
                                 <h5>Birthday: {user.birthday}</h5>
                             </Row>
                             <Row>
-                                <h5>Phone: {user.phone_number}</h5>
+                                <h5>Phone: {user.phoneNumber}</h5>
                             </Row>
                             <Row>
                                 <h5>Email: {user.email}</h5>

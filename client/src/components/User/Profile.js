@@ -9,9 +9,15 @@ import {faList, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 
 
 export const Profile = (user) => {
+    console.log(user.user)
     const [up, setUp] = useState(false);
     const [data, setData] = useState(user.user.login);
     const auth = useSelector((state) => state.auth);
+
+    function userChangeA(event){
+        user.user.adventurer[event.target.name] = event.target.value
+        setUp(!up)
+    }
     function userChange(event){
         user.user[event.target.name] = event.target.value
         setUp(!up)
@@ -158,6 +164,60 @@ export const Profile = (user) => {
                             </ListGroup.Item> : ""}
                     </div>
                 }
+                {user.rate === 1?
+                    <div className={"border-white bg-dark"}>
+                        <Form.Row className={"text-success bg-dark"}>
+                            <Form.Group as={Col} controlId="formGridRank">
+                                <Form.Label>Rank</Form.Label>
+                                <Form.Control as="select"
+                                              required
+                                              name="rank"
+                                              value={user.user.adventurer.rank}
+                                              onChange={userChangeA}
+                                >
+                                    <option value="F">F</option>
+                                    <option value="E">E</option>
+                                    <option value="D">D</option>
+                                    <option value="B">B</option>
+                                    <option value="A">A</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A++">A++</option>
+                                    <option value="S">S</option>
+                                    <option value="SS">SS</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="formGridRole">
+                                <Form.Label>Role</Form.Label>
+                                <Form.Control
+                                    required
+                                    autoComplete="off"
+                                    type="text"
+                                    name="role"
+                                    value={user.user.adventurer.role}
+                                    onChange={userChangeA}
+                                    className={"bg-dark text-white"}
+                                    placeholder="Enter Adventurer Role"
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="formGridReward">
+                                <Form.Label>Weapon</Form.Label>
+                                <Form.Control
+                                    required
+                                    autoComplete="off"
+                                    type="text"
+                                    name="weapon"
+                                    value={user.user.adventurer.weapon}
+                                    onChange={userChangeA}
+                                    className={"bg-dark text-white"}
+                                    placeholder="Enter Adventurer Weapon"
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                    </div>:""}
 
                 {user.user.balance !== null & user.user.login === auth.username?
                     <ListGroup.Item className={"border-List bg-dark text-white w-100"}>

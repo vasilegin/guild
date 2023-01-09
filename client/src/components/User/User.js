@@ -34,7 +34,7 @@ class User extends Component {
 
     initialState = {
         id: "",
-        balance: null,
+        balance: 0,
         birthday: null,
         firstname: null,
         status: null,
@@ -50,6 +50,7 @@ class User extends Component {
         change: false,
         jobs: [],
         orders: [],
+        rate: "",
 
         current: "PROFILE",
 
@@ -70,6 +71,7 @@ class User extends Component {
         if (userId) {
             this.findUserById(userId);
         }
+        this.state.rate = this.props.rate
     }
 
     findUserById = (userId) => {
@@ -236,7 +238,7 @@ class User extends Component {
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
                     <FontAwesomeIcon icon={faDragon} />{" "}
-                    Job
+                    User
                 </Card.Header>
                 <Card.Body>
                     <Row>
@@ -269,39 +271,41 @@ class User extends Component {
                             }
                         </Col>
                         <Col>
-                            <Card
-                                bg="secondary"
-                                key="secondary"
-                                text='white'
-                                style={{ width: '18rem' }}
-                                className={"border-secondary bg-dark text-white"} style={{border: "#17a2b8"}}>
-                                <Card.Header>
-                                    <Nav justify variant="tabs" className={"text-success"} variant="pills" defaultActiveKey="#first">
-                                        <Nav.Item>
-                                            <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link href="#current" disabled={this.state.change} onSelect={() => this.state.current = "CURRENT"}>Current tasks</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link href="#posted" disabled={this.state.change} onSelect={() => this.state.current = "POSTED"}>Posted tasks</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link href="#statistics" disabled={this.state.change} onSelect={() => this.state.current = "STATISTICS"} >Statistics</Nav.Link>
-                                        </Nav.Item>
-                                    </Nav>
-                                </Card.Header>
-                                <Card.Body>
-                                    {this.state.current === "PROFILE"? profile: ""}
-                                    {this.state.current === "CURRENT"? <JobListForUser status={"CURRENT"} id={this.state.id}/>: ""}
-                                    {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
-                                    {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
-                                    {this.state.current === "STATISTICS"? <Gist posted={posted} completed={completed}/>: ""}
-                                </Card.Body>
-                            </Card>
+                            {this.state.role === "ADMIN" & this.state.status === "TEST"?
+                                profile
+                                :<Card
+                                    bg="secondary"
+                                    key="secondary"
+                                    text='white'
+                                    style={{ width: '18rem' }}
+                                    className={"border-secondary bg-dark text-white"} style={{border: "#17a2b8"}}>
+                                    <Card.Header>
+                                        <Nav justify variant="tabs" className={"text-success"} variant="pills" defaultActiveKey="#first">
+                                            <Nav.Item>
+                                                <Nav.Link href="#profile" onSelect={() => this.state.current = "PROFILE"}>Profile</Nav.Link>
+                                            </Nav.Item>
+                                            <Nav.Item>
+                                                <Nav.Link href="#current" disabled={this.state.change} onSelect={() => this.state.current = "CURRENT"}>Current tasks</Nav.Link>
+                                            </Nav.Item>
+                                            <Nav.Item>
+                                                <Nav.Link href="#completed" disabled={this.state.change} onSelect={() => this.state.current = "COMPLETED"}>Completed tasks</Nav.Link>
+                                            </Nav.Item>
+                                            <Nav.Item>
+                                                <Nav.Link href="#posted" disabled={this.state.change} onSelect={() => this.state.current = "POSTED"}>Posted tasks</Nav.Link>
+                                            </Nav.Item>
+                                            <Nav.Item>
+                                                <Nav.Link href="#statistics" disabled={this.state.change} onSelect={() => this.state.current = "STATISTICS"} >Statistics</Nav.Link>
+                                            </Nav.Item>
+                                        </Nav>
+                                    </Card.Header>
+                                    <Card.Body>
+                                        {this.state.current === "PROFILE"? profile: ""}
+                                        {this.state.current === "CURRENT"? <JobListForUser status={"CURRENT"} id={this.state.id}/>: ""}
+                                        {this.state.current === "COMPLETED"? <JobListForUser status={"COMPLETED"} id={this.state.id}/>: ""}
+                                        {this.state.current === "POSTED"? <JobListForUser status={"POSTED"} id={this.state.id}/>: ""}
+                                        {this.state.current === "STATISTICS"? <Gist posted={posted} completed={completed}/>: ""}
+                                    </Card.Body>
+                                </Card>}
                         </Col>
                     </Row>
                 </Card.Body>
