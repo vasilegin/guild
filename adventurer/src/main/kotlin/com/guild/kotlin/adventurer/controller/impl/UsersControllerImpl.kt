@@ -28,7 +28,6 @@ class UsersControllerImpl(private val userService: UserServiceImpl) : Resource<U
     }
 
     override fun findById(@PathVariable id: Long?): ResponseEntity<Optional<User>> {
-        System.out.println(userService.findById(id));
         return ResponseEntity.ok(userService.findById(id))
     }
 
@@ -37,8 +36,6 @@ class UsersControllerImpl(private val userService: UserServiceImpl) : Resource<U
     }
 
     override fun update(user: User): ResponseEntity<User?> {
-        System.out.println("test");
-        System.out.println(user);
         return ResponseEntity.ok(userService.saveOrUpdate(user))
     }
 

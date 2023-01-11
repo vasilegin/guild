@@ -2,6 +2,7 @@ package com.guild.kotlin.adventurer.entities
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.Type
+import java.time.OffsetDateTime
 import javax.persistence.*
 
 @Entity
@@ -29,6 +30,9 @@ open class Review {
     @Column(name = "Score")
     open var score: Long? = null
 
+    @Column(name = "Date_created")
+    open var dateCreated: OffsetDateTime? = null
+
     @OneToMany(mappedBy = "review")
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
@@ -39,6 +43,7 @@ open class Review {
         this.author = author
         this.text = text
         this.score = score
+        this.dateCreated = dateCreated
     }
 
     override fun toString(): String {
