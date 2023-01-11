@@ -3,13 +3,19 @@ package com.guild.kotlin.adventurer.controller.impl
 import com.guild.kotlin.adventurer.controller.Resource
 import com.guild.kotlin.adventurer.entities.Report
 import com.guild.kotlin.adventurer.entities.Review
-import com.guild.kotlin.adventurer.service.impl.ReportServiceImpl
+import com.guild.kotlin.adventurer.service.IService
 import com.guild.kotlin.adventurer.service.impl.ReviewServiceImpl
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
-class ReviewControllerImpl(private val reviewServiceImpl: ReviewServiceImpl): Resource<Review> {
+@RestController
+@RequestMapping("/review")
+@CrossOrigin(origins = ["http://localhost:3000"])
+class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>): Resource<Review> {
     override fun findAll(
         pageNumber: Int,
         pageSize: Int,

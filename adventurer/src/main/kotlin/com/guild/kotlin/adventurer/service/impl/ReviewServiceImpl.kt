@@ -8,8 +8,10 @@ import com.guild.kotlin.adventurer.repo.UserRepository
 import com.guild.kotlin.adventurer.service.IService
 import org.json.JSONException
 import org.json.JSONObject
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
 class ReviewServiceImpl(private val reviewRepository: ReviewRepository): IService<Review> {
 
     override fun saveOrUpdate(review: Review): Review {

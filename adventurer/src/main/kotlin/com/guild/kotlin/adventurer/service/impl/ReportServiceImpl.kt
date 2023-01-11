@@ -7,8 +7,10 @@ import com.guild.kotlin.adventurer.repo.UserRepository
 import com.guild.kotlin.adventurer.service.IService
 import org.json.JSONException
 import org.json.JSONObject
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
 class ReportServiceImpl(private val reportRepository: ReportRepository) : IService<Report> {
 
     override fun saveOrUpdate(report: Report): Report {

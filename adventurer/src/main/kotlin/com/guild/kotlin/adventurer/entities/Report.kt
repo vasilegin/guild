@@ -34,7 +34,7 @@ open class Report {
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
-    constructor(id: Long?, job: Job?, author: User?, text: String?, dateCreated: OffsetDateTime?,) {
+    constructor(id: Long?, job: Job?, author: User?, text: String?, dateCreated: OffsetDateTime?) {
         this.id = id
         this.job = job
         this.text = text
