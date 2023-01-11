@@ -75,7 +75,7 @@ open class Job {
     open var dateResolved: OffsetDateTime? = null
 
     @OneToMany(mappedBy = "job")
-    @JsonIgnoreProperties("hibernateLazyInitializer", "job", "author", "photos")
+    @JsonIgnoreProperties("hibernateLazyInitializer", "job", "photos")
     open var reviews: MutableSet<Review> = mutableSetOf()
 
     @OneToMany(mappedBy = "job")
@@ -88,9 +88,9 @@ open class Job {
 
     constructor(
         id: Long?,
-        customer: User?,
+//        customer: User?,
         customerId: Long?,
-        adventurer: User?,
+//        adventurer: User?,
         adventurerId: Long?,
         group: Group?,
         title: String?,
@@ -105,9 +105,9 @@ open class Job {
         dateResolved: OffsetDateTime?
     ) {
         this.id = id
-        this.customer = customer
+//        this.customer = customer
         this.customerId = customerId
-        this.adventurer = adventurer
+//        this.adventurer = adventurer
         this.adventurerId = adventurerId
         this.group = group
         this.title = title

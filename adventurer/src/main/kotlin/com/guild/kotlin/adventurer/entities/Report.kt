@@ -15,8 +15,11 @@ open class Report {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
-    @JoinColumn(name = "Job_id")
+    @JoinColumn(name = "Job_id", insertable = false, updatable = false)
     open var job: Job? = null
+
+    @Column(name = "Job_id")
+    open var jobId: Long? = null
 
     @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Text")
@@ -24,8 +27,11 @@ open class Report {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
-    @JoinColumn(name = "Author_id")
+    @JoinColumn(name = "Author_id", insertable = false, updatable = false)
     open var author: User? = null
+
+    @Column(name = "Author_id")
+    open var authorId: Long? = null
 
     @Column(name = "Date_created")
     open var dateCreated: OffsetDateTime? = null
@@ -34,11 +40,20 @@ open class Report {
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
-    constructor(id: Long?, job: Job?, author: User?, text: String?, dateCreated: OffsetDateTime?) {
+    constructor(
+        id: Long?,
+//        job: Job?,
+//        author: User?,
+        text: String?,
+        dateCreated: OffsetDateTime?,
+        jobId: Long?,
+        authorId: Long?) {
         this.id = id
-        this.job = job
+//        this.job = job
+        this.jobId = jobId
+//        this.author = author
+        this.authorId = authorId
         this.text = text
-        this.author = author
         this.dateCreated = dateCreated
     }
 

@@ -183,8 +183,8 @@ class Job extends Component {
     console.log(this.state)
     const job = {
       id: this.state.id,
-      // adventurer: this.state.adventurer,
-      // customer: this.state.customer,
+      adventurer: this.state.adventurer,
+      customer: this.state.customer,
       adventurerId: this.state.adventurerId,
       customerId: this.state.customerId,
       group: this.state.group,

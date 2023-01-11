@@ -15,13 +15,20 @@ open class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
-    @JoinColumn(name = "Job_id")
+    @JoinColumn(name = "Job_id", insertable = false, updatable = false)
     open var job: Job? = null
+
+    @Column(name = "Job_id")
+    open var jobId: Long? = null
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "adventurer", "guildStaff", "jobs", "orders", "reviews", "participates", "photos")
-    @JoinColumn(name = "Author_id")
+    @JoinColumn(name = "Author_id", insertable = false, updatable = false)
     open var author: User? = null
+
+    @Column(name = "Author_id")
+    open var authorId: Long? = null
 
     @Type(type = "org.hibernate.type.TextType")
     @Column(name = "Text")
@@ -37,10 +44,19 @@ open class Review {
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "job", "report", "review", "group", "user")
     open var photos: MutableSet<Photo> = mutableSetOf()
 
-    constructor(id: Long?, job: Job?, author: User?, text: String?, score: Long?) {
+    constructor(
+        id: Long?,
+//        job: Job?,
+//        author: User?,
+        text: String?,
+        score: Long?,
+        jobId: Long?,
+        authorId: Long?) {
         this.id = id
-        this.job = job
-        this.author = author
+//        this.job = job
+        this.jobId = jobId
+//        this.author = author
+        this.authorId = authorId
         this.text = text
         this.score = score
         this.dateCreated = dateCreated
