@@ -282,6 +282,20 @@ class JobDetail extends Component {
         this.clickHandlerClose()
     }
 
+    acceptReview= () => {
+        const review = {
+            text: this.state.reviewText,
+            jobId: this.state.id,
+            dateCreated: new Date(),
+            authorId: this.state.userId,
+            author: this.state.customer,
+            score: 100
+        }
+        saveReview(review)
+        this.state.review.push(review)
+        this.clickHandlerClose()
+    }
+
 
 
     edit = () => {
@@ -297,10 +311,10 @@ class JobDetail extends Component {
     render() {
         const report =
             <div>
-                <UploadComponent
-                    {...this.state.upload}
-                    handleChange={this.handleChange}
-                />
+                {/*<UploadComponent*/}
+                {/*    {...this.state.upload}*/}
+                {/*    handleChange={this.handleChange}*/}
+                {/*/>*/}
                 <Form>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridMessage">
@@ -323,7 +337,7 @@ class JobDetail extends Component {
                 </Form>
                 <Button
                     size="sm"
-                    variant="success"
+                    variant="info"
                     type="submit"
                     onClick={() => this.saveReport()}
                 >
@@ -333,10 +347,10 @@ class JobDetail extends Component {
 
         const review =
             <div>
-                <UploadComponent
-                    {...this.state.upload}
-                    handleChange={this.handleChange}
-                />
+                {/*<UploadComponent*/}
+                {/*    {...this.state.upload}*/}
+                {/*    handleChange={this.handleChange}*/}
+                {/*/>*/}
                 <Form>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridMessage">
@@ -359,11 +373,20 @@ class JobDetail extends Component {
                 </Form>
                 <Button
                     size="sm"
-                    variant="success"
+                    variant="info"
                     type="button"
                     onClick={() => this.saveReview()}
                 >
                     <FontAwesomeIcon icon={faSave} /> Send
+                </Button>
+                <Button
+                    size="sm"
+                    variant="success"
+                    type="button"
+                    onClick={() => this.saveReview()}
+                >
+                    <FontAwesomeIcon icon={faSave} />
+                    To accept
                 </Button>
             </div>
 

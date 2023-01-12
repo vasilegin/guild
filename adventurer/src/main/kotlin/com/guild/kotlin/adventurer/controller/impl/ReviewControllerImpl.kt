@@ -3,6 +3,8 @@ package com.guild.kotlin.adventurer.controller.impl
 import com.guild.kotlin.adventurer.controller.Resource
 import com.guild.kotlin.adventurer.entities.Report
 import com.guild.kotlin.adventurer.entities.Review
+import com.guild.kotlin.adventurer.repo.JobRepository
+import com.guild.kotlin.adventurer.repo.UserRepository
 import com.guild.kotlin.adventurer.service.IService
 import com.guild.kotlin.adventurer.service.impl.ReviewServiceImpl
 import org.springframework.data.domain.Page
@@ -15,7 +17,9 @@ import java.util.*
 @RestController
 @RequestMapping("/review")
 @CrossOrigin(origins = ["http://localhost:3000"])
-class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>): Resource<Review> {
+class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>,
+                           private val jobRepository: JobRepository,
+                           private val userRepository: UserRepository): Resource<Review> {
     override fun findAll(
         pageNumber: Int,
         pageSize: Int,
@@ -38,6 +42,14 @@ class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>): Res
     }
 
     override fun save(review: Review): Any {
+        if (review.score?.toInt() == 100){
+            var job = jobRepository.findById(review.jobId!!).get()
+            var adventurer = userRepository.findById(job.adventurerId!!).get()
+            job.status = "Completed"
+            adventurer.balance = adventurer.balance?.plus(job.reward!!)
+            userRepository.saveAndFlush(adventurer)
+            jobRepository.saveAndFlush(job)
+        }
         return ResponseEntity.ok(reviewServiceImpl.saveOrUpdate(review))
     }
 }
