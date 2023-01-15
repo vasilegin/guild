@@ -3,8 +3,8 @@ MPI course project
 
 # dependence
 
-* JVM 
-* node 
+* JVM - 17.0.5
+* node - 18.6.0
 * npx 
 * yarn
 * Kotlin 
