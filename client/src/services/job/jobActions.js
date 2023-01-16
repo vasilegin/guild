@@ -2,12 +2,13 @@ import * as BT from "./jobTypes";
 import axios from "axios";
 
 export const saveJob = (job) => {
+    console.log(job)
   return (dispatch) => {
     dispatch({
       type: BT.SAVE_JOB_REQUEST,
     });
     axios
-      .post("http://localhost:8081/rest/jobs", job)
+      .post("http://localhost:8081/rest/jobs" , job)
       .then((response) => {
         dispatch(jobSuccess(response.data));
         console.log(response)

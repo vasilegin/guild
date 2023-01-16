@@ -14,7 +14,7 @@ export const authenticateUser = (login, password) => async (dispatch) => {
     });
     console.log(response.data.token);
     localStorage.setItem("jwtToken", response.data.token);
-    dispatch(success({ username: response.data.name, isLoggedIn: true, role: response.data.role, id: response.data.id, status: response.data.status}));
+    dispatch(success({ username: response.data.name, isLoggedIn: true, role: response.data.role, id: response.data.id, status: response.data.status, rank: response.data.rank}));
     return Promise.resolve(response.data);
   } catch (error) {
     dispatch(failure());
@@ -26,7 +26,7 @@ export const logoutUser = () => {
   return (dispatch) => {
     dispatch(logoutRequest());
     localStorage.removeItem("jwtToken");
-    dispatch(success({ username: "", isLoggedIn: false, role: "USER", id: "", status: ""}));
+    dispatch(success({response:"", username: "", isLoggedIn: false, role: "USER", id: "", status: "", rank: ""}));
   };
 };
 

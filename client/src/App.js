@@ -46,14 +46,16 @@ const App = () => {
               <Route path="/" exact component={Welcome} />
               <Route path="/home" exact component={Home} />
               <Route path="/add" exact render={(props) =>
-                  (<Job{...props} id={auth.id}/>)}/>
+                  (<Job{...props} id={auth.id}
+                                username={auth.username}/>)}/>
               <Route path="/edit/:id" exact component={Job} />
               <Route path="/job/:id" exact render={(props) =>
                   (<JobDetail{...props}
                              role={auth.role}
                              username={auth.username}
                              id={auth.id}
-                             status={auth.status}/>)}
+                             status={auth.status}
+                             rank={auth.rank}/>)}
               />
               <Route path="/list" exact component={JobList} />
               <Route path="/adventurer" exact component={AdventurerList} />

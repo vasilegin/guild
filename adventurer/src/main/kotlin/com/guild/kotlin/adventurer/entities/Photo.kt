@@ -19,8 +19,11 @@ open class Photo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "handler", "customer", "adventurer", "group", "reviews", "reports", "photos")
-    @JoinColumn(name = "Job_id")
+    @JoinColumn(name = "Job_id", insertable = false, updatable = false)
     open var job: Job? = null
+
+    @Column(name = "Job_id")
+    open var jobId: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("hibernateLazyInitializer", "job", "photos")
@@ -50,6 +53,12 @@ open class Photo {
         this.review = review
         this.group = group
         this.user = user
+    }
+
+    constructor(id: Long?, location: String?, jobId: Long?) {
+        this.id = id
+        this.location = location
+        this.jobId = jobId
     }
 
     override fun toString(): String {

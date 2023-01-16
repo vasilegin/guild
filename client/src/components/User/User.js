@@ -244,14 +244,12 @@ class User extends Component {
                     <Row>
                         <Col md = {4}>
                             <Card.Title className={"center-75"}>Photos</Card.Title>
-                            {!this.state.change?
-                                <div>
-                                    <Corousel images = {this.state.picture}/>
-                                </div> :
-                                <UploadComponent
-                                    {...this.state.upload}
-                                    handleChange={this.handleChange}
-                                />}
+                            {this.state.status != null?
+                                  <div>
+                                      <Corousel images = {this.state.picture}
+                                                status = {this.state.status}/>
+                                  </div>:""
+                            }
                             {this.state.status === "USER"?
                                 <Button className={"w-100"}
                                         onClick={() => this.passTheTest()}>

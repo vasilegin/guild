@@ -5,7 +5,8 @@ const initialState = {
   username: "",
   isLoggedIn: "",
   role: "",
-  status: ""
+  status: "",
+  rank: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,7 +23,8 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: action.payload.isLoggedIn,
         role: action.payload.role,
         status: action.payload.status,
-        id: action.payload.id
+        id: action.payload.id,
+        rank: action.payload.rank
       };
     default:
       return state;

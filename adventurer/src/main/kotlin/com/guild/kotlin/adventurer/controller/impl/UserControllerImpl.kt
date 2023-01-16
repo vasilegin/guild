@@ -40,6 +40,9 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
                 jsonObject.put("id", user.id)
                 jsonObject.put("role", role)
                 jsonObject.put("status", user.status)
+                if (user.adventurer != null){
+                    jsonObject.put("rank", user.adventurer!!.rank)
+                }
                 jsonObject.put("token", tokenProvider.createToken(login, role))
                 return ResponseEntity(jsonObject.toString(), HttpStatus.OK)
             }
@@ -57,8 +60,13 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
     @PostMapping(value = ["/register"])
     fun register(@RequestBody user: User): ResponseEntity<String?>? {
         val jsonObject = JSONObject()
-        System.out.println(jsonObject);
         try {
+            if (user.login == null){
+                throw Exception("Login null")
+            }
+            if (user.email == null){
+                throw Exception("Email null")
+            }
             user.password = NoOpPasswordEncoder.getInstance().encode(user.password)
             user.role = roleRepository.findByName(ConstantUtils.USER.toString())
             user.status = "USER"

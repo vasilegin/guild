@@ -6,7 +6,7 @@ export default function Gist(posted) {
     console.log(posted)
     const data = [
         { name: "Posted", value: posted.posted},
-        { name: "Completed", value: posted.completed},
+        { name: "Taken", value: posted.completed},
     ];
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];

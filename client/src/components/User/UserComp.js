@@ -7,12 +7,14 @@ import Corousel from "../Images/Corousel";
 
 export const UserComp = ({user}) => {
     var photos = user.photos.map((item) => item.location)
+    var status = user.status
     return (
         <div className="align-content-center content">
             <Container>
                 <Row>
                     <Col md = {4}>
-                        <Corousel images = {photos}/>
+                        <Corousel images = {photos}
+                                  status = {status}/>
                     </Col>
                     <Col md = {8}>
                         <Link to={"user/" + user.id} style={{color: 'white'}} className="nav-link h-100" preventScrollReset={true}>

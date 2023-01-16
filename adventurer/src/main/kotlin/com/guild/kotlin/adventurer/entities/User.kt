@@ -125,6 +125,16 @@ open class User {
         this.balance = balance
     }
 
+    constructor(
+        login: String?,
+        password: String,
+        email: String?,
+    ) {
+        this.login = login
+        this.password = password
+        this.email = email
+    }
+
     override fun toString(): String {
         return "User(id=$id, login=$login, password=$password, birthday=$birthday, gender=$gender, surname=$surname, firstname=$firstname, email=$email, phoneNumber=$phoneNumber, adventurer=$adventurer, guildStaff=$guildStaff, balance=$balance)"
     }

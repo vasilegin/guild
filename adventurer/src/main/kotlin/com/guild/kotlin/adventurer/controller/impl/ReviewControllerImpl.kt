@@ -20,6 +20,18 @@ import java.util.*
 class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>,
                            private val jobRepository: JobRepository,
                            private val userRepository: UserRepository): Resource<Review> {
+
+    val Rank = mapOf(
+        "F" to 0,
+        "E" to 1,
+        "D" to  2,
+        "B" to 3,
+        "A" to 4,
+        "A+" to 5,
+        "A++" to 6,
+        "S" to 7,
+        "SS" to 8)
+
     override fun findAll(
         pageNumber: Int,
         pageSize: Int,
@@ -47,6 +59,9 @@ class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>,
             var adventurer = userRepository.findById(job.adventurerId!!).get()
             job.status = "Completed"
             adventurer.balance = adventurer.balance?.plus(job.reward!!)
+            if (Rank[job.rank]!! > Rank[adventurer.adventurer!!.rank]!!){
+                adventurer.adventurer!!.rank = job.rank
+            }
             userRepository.saveAndFlush(adventurer)
             jobRepository.saveAndFlush(job)
         }

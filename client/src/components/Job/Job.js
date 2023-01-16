@@ -21,6 +21,8 @@ import MyToast from "../MyToast";
 import UploadComponent from "../Images/Upload";
 import Corousel from "../Images/Corousel";
 import {fetchUser} from "../../services/user/adventurer/userActions";
+import axios from "axios";
+
 
 class Job extends Component {
 
@@ -45,6 +47,8 @@ class Job extends Component {
     datePosted: "",
     dateResolved: "",
     userId: this.props.id,
+    userName: this.props.username,
+    photos: [],
 
     show: false,
     picture: [],
@@ -116,16 +120,15 @@ class Job extends Component {
   };
 
   submitJob = (event) => {
+    console.log(this.state)
     event.preventDefault();
     this.props.fetchUser(this.state.userId)
-    this.state.customer = this.props.userObject.users
-    // console.log("2")
     console.log(this.props.userObject.users)
     const job = {
       id: this.state.id,
       adventurer: this.state.adventurer,
       customer: this.state.customer,
-      customerId: this.state.customer.id,
+      customerId: this.state.userId,
       group: this.state.group,
       title: this.state.title,
       description: this.state.description,
@@ -136,20 +139,50 @@ class Job extends Component {
       dateCreated: new Date(),
       dateAccepted: this.state.dateAccepted,
       datePosted: this.state.datePosted,
-      dateResolved: this.state.dateResolved
+      dateResolved: this.state.dateResolved,
+      photos: this.state.photos,
     };
+
+    setTimeout(() => 2000);
     console.log(job)
     this.props.saveJob(job);
     setTimeout(() => {
       if (this.props.jobObject.job != null) {
+            console.log("sg5d4sa5d45as")
+            console.log(this.props.jobObject.job.id)
+            console.log("sg5d4sa5d45as")
+
+            const picture = {
+                            pictures: this.state.upload.pictures,
+                            userName: this.state.userName,
+                            directory: "Job",
+                            jobId: this.props.jobObject.job.id
+                        };
+                  console.log(this.state)
+                  console.log(picture)
+                    axios
+                      .post(
+                        "http://localhost:8081/rest/images/", picture
+                      )
+                      .then((response) => response.data)
+                      .then((data) => {
+                      })
+                      .catch((error) => {
+                        localStorage.removeItem("jwtToken");
+                        this.props.history.push("/");
+                      });
+                      this.setState(this.initialState);
+
         this.setState({ show: true, method: "post" });
         setTimeout(() => this.setState({ show: false }), 3000);
       } else {
         this.setState({ show: false });
+        this.setState(this.initialState);
       }
     }, 2000);
-    this.setState(this.initialState);
+    console.log(this.props)
   };
+
 
   handleChange = files => {
     const { pictures } = this.state.upload;

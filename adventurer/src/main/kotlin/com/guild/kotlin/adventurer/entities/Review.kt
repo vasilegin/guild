@@ -63,6 +63,6 @@ open class Review {
     }
 
     override fun toString(): String {
-        return "Review(id=$id, job=$job, author=$author, text=$text, score=$score)"
+        return "Review(id=$id, text=$text, score=$score)"
     }
 }

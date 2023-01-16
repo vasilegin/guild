@@ -123,7 +123,7 @@ open class Job {
     }
 
     override fun toString(): String {
-        return "Job(id=$id, customer=$customer, adventurer=$adventurer, group=$group, title=$title, description=$description, rank=$rank, reward=$reward, location=$location, status=$status, dateCreated=$dateCreated, datePosted=$datePosted, dateAccepted=$dateAccepted, dateResolved=$dateResolved)"
+        return "Job(id=$id, group=$group, title=$title, description=$description, rank=$rank, reward=$reward, location=$location, status=$status, dateCreated=$dateCreated, datePosted=$datePosted, dateAccepted=$dateAccepted, dateResolved=$dateResolved)"
     }
 
 

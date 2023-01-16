@@ -29,6 +29,8 @@ class JobDetail extends Component {
         this.state = this.initialState;
     }
 
+
+
     initialState = {
         id: "",
         adventurerId: "",
@@ -51,11 +53,23 @@ class JobDetail extends Component {
         username: this.props.username,
         userStatus: this.props.status,
         userId: this.props.id,
+        userRank: this.props.rank,
         current: "JOB",
         isReport: false,
         isReview: false,
         reportText: "",
         reviewText: "",
+        Rank: {
+                "F" : 0,
+                "E" : 1,
+                "D" :  2,
+                "B" : 3,
+                "A" : 4,
+                "A+" : 5,
+                "A++" : 6,
+                "S" : 7,
+                "SS" : 8
+                },
 
         show: false,
         picture: [],
@@ -190,9 +204,10 @@ class JobDetail extends Component {
 
     handlerAccept = () => {
         this.state.status = "Execution"
-        this.props.fetchUser(this.state.userId)
-        this.state.adventurerId = this.props.userObject.users.id
-        this.state.adventurer = this.props.userObject.users
+//        this.props.fetchUser()
+        this.state.adventurerId = this.state.userId
+//        this.state.adventurer = this.props.userObject.users
+        console.log(this.state)
         this.updateJob()
     };
 
@@ -262,7 +277,7 @@ class JobDetail extends Component {
             jobId: this.state.id,
             dateCreated: new Date(),
             authorId: this.state.userId,
-            author: this.state.adventurer
+//            author: this.state.adventurer
         }
         saveReport(report)
         this.state.report.push(report)
@@ -274,8 +289,9 @@ class JobDetail extends Component {
             text: this.state.reviewText,
             jobId: this.state.id,
             dateCreated: new Date(),
+//            author: this.state.customer,
             authorId: this.state.userId,
-            author: this.state.customer
+            score: 0
         }
         saveReview(review)
         this.state.review.push(review)
@@ -287,11 +303,12 @@ class JobDetail extends Component {
             text: this.state.reviewText,
             jobId: this.state.id,
             dateCreated: new Date(),
+//            author: this.state.customer,
             authorId: this.state.userId,
-            author: this.state.customer,
-            score: 100
+            score: 100,
         }
         saveReview(review)
+        this.state.status = "Completed"
         this.state.review.push(review)
         this.clickHandlerClose()
     }
@@ -308,7 +325,8 @@ class JobDetail extends Component {
         });
     };
 
-    render() {
+    render(){
+        console.log((this.state.Rank[this.state.rank] - this.state.Rank[this.state.userRank]) > 1)
         const report =
             <div>
                 {/*<UploadComponent*/}
@@ -378,12 +396,12 @@ class JobDetail extends Component {
                     onClick={() => this.saveReview()}
                 >
                     <FontAwesomeIcon icon={faSave} /> Send
-                </Button>
+                </Button>{" "}
                 <Button
                     size="sm"
                     variant="success"
                     type="button"
-                    onClick={() => this.saveReview()}
+                    onClick={() => this.acceptReview()}
                 >
                     <FontAwesomeIcon icon={faSave} />
                     To accept
@@ -579,7 +597,7 @@ class JobDetail extends Component {
                             Edit
                         </Button> :""}{" "}
                     <Button
-                        hidden = {this.state.customerId !== this.state.userId & this.state.userStatus==="ADVENTURER" & (this.state.status === "Published" | this.state.status ==="Execution") ? false:true}
+                        hidden = {(this.state.Rank[this.state.rank] - this.state.Rank[this.state.userRank]) <= 1 & this.state.customerId !== this.state.userId & this.state.userStatus==="ADVENTURER" & (this.state.status === "Published" | this.state.status ==="Execution") ? false:true}
                         size="sm"
                         onClick={this.state.adventurerLogin!==this.state.username? () => this.handlerAccept() : () => this.handlerRefuse()}
                         variant={this.state.adventurerLogin!==this.state.username? "success" : "danger"}
