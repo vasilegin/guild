@@ -17,12 +17,12 @@ open class User {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Login", unique=true)
+    @Column(name = "Login", unique=true, nullable = false)
     open var login: String? = null
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Password")
+    @Column(name = "Password", nullable = false)
     open var password: String? = null
 
     @Column(name = "Birthday")
@@ -45,7 +45,7 @@ open class User {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Email")
+    @Column(name = "Email", nullable = false)
     open var email: String? = null
 
     @Lob
@@ -133,6 +133,9 @@ open class User {
         this.login = login
         this.password = password
         this.email = email
+    }
+
+    constructor() {
     }
 
     override fun toString(): String {

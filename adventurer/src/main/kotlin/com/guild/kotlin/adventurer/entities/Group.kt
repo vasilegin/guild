@@ -14,10 +14,10 @@ open class Group {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false)
     open var name: String? = null
 
-    @Column(name = "Active")
+    @Column(name = "Active", nullable = false)
     open var active: Boolean? = null
 
     @OneToMany(mappedBy = "group")
@@ -40,6 +40,9 @@ open class Group {
         this.id = id
         this.name = name
         this.active = active
+    }
+
+    constructor() {
     }
 
     override fun toString(): String {

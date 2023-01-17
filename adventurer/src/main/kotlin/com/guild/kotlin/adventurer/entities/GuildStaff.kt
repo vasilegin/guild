@@ -1,12 +1,14 @@
 package com.guild.kotlin.adventurer.entities
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import io.micrometer.core.lang.NonNull
 import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
 @Table(name = "guild_staff", schema = "public")
 open class GuildStaff {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -14,7 +16,7 @@ open class GuildStaff {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Position")
+    @Column(name = "Position", nullable = false)
     open var position: String? = null
 
     @OneToMany(mappedBy = "guildStaff")
@@ -24,6 +26,9 @@ open class GuildStaff {
     constructor(id: Long?, position: String?) {
         this.id = id
         this.position = position
+    }
+
+    constructor() {
     }
 
     override fun toString(): String {

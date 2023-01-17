@@ -14,7 +14,7 @@ open class Photo {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Location")
+    @Column(name = "Location", nullable = false)
     open var location: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,6 +61,8 @@ open class Photo {
         this.jobId = jobId
     }
 
+    constructor() {
+    }
     override fun toString(): String {
         return "Photo(id=$id, location=$location, job=$job, report=$report, review=$review, group=$group, user=$user)"
     }

@@ -27,7 +27,6 @@ class UserControllerImpl(private val authenticationManager: AuthenticationManage
     @PostMapping(value = ["/authenticate"])
     fun authenticate(@RequestBody user: User): ResponseEntity<String?>? {
         val jsonObject = JSONObject()
-        System.out.println(user)
         try {
             val authentication: Authentication = authenticationManager
                 .authenticate(UsernamePasswordAuthenticationToken(user.login, user.password))

@@ -14,7 +14,7 @@ open class Adventurer {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Rank")
+    @Column(name = "Rank", nullable = false)
     open var rank: String? = null
 
     @Lob
@@ -32,6 +32,9 @@ open class Adventurer {
         this.rank = rank
         this.role = role
         this.weapon = weapon
+    }
+
+    constructor() {
     }
 
     override fun toString(): String {

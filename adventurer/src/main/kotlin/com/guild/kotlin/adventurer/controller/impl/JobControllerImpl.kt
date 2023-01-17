@@ -57,7 +57,6 @@ class JobControllerImpl(private val jobService: IService<Job>, private val jobPa
                 @RequestParam status: String? ,
                 @RequestParam title: String?,
                 @RequestParam rank: String?): ResponseEntity<Page<Job>> {
-        System.out.println(pageable);
         if (title == null){
             if (rank == null) {
                 return ResponseEntity.ok(jobServiceImpl.findAllByStatus(pageable, status))
@@ -79,9 +78,7 @@ class JobControllerImpl(private val jobService: IService<Job>, private val jobPa
     }
 
     override fun save(job: Job): Any {
-        System.out.println(job);
         if (userRepository.findById(job.customerId!!).get().balance!! < job.reward) {
-            System.out.println(500);
             return ResponseEntity.notFound()
         }
         else {
@@ -91,21 +88,6 @@ class JobControllerImpl(private val jobService: IService<Job>, private val jobPa
             return ResponseEntity.ok(jobService.saveOrUpdate(job))
         }
     }
-//    @PostMapping("/save",consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
-//    fun saveWithImage(@RequestBody job: Job,
-//                    @RequestBody pictures: Pictures): Any {
-//        System.out.println(job);
-//        if (userRepository.findById(job.customerId!!).get().balance!! < job.reward) {
-//            System.out.println(500);
-//            return ResponseEntity.notFound()
-//        }
-//        else {
-//            var user: User = userRepository.findById(job.customerId!!).get()
-//            user!!.balance = user!!.balance!! - job.reward!!
-//            userRepository.saveAndFlush(user)
-//            return ResponseEntity.ok(jobService.saveOrUpdate(job))
-//        }
-//    }
 
     override fun update(job: Job): ResponseEntity<Job?> {
         return ResponseEntity.ok(jobService.saveOrUpdate(job))

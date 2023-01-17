@@ -18,11 +18,11 @@ open class Report {
     @JoinColumn(name = "Job_id", insertable = false, updatable = false)
     open var job: Job? = null
 
-    @Column(name = "Job_id")
+    @Column(name = "Job_id",  nullable = false)
     open var jobId: Long? = null
 
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Text")
+    @Column(name = "Text",  nullable = false)
     open var text: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,7 +30,7 @@ open class Report {
     @JoinColumn(name = "Author_id", insertable = false, updatable = false)
     open var author: User? = null
 
-    @Column(name = "Author_id")
+    @Column(name = "Author_id",  nullable = false)
     open var authorId: Long? = null
 
     @Column(name = "Date_created")
@@ -55,6 +55,9 @@ open class Report {
         this.authorId = authorId
         this.text = text
         this.dateCreated = dateCreated
+    }
+
+    constructor(){
     }
 
     override fun toString(): String {

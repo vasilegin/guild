@@ -19,7 +19,8 @@ open class Job {
     @JoinColumn(name = "Customer_id", insertable = false, updatable = false)
     open var customer: User? = null
 
-    @Column(name = "Customer_id")
+
+    @Column(name = "Customer_id", nullable = false)
     open var customerId: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,11 +38,11 @@ open class Job {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Title")
+    @Column(name = "Title", nullable = false)
     open var title: String? = null
 
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Description")
+    @Column(name = "Description", nullable = false)
     open var description: String? = null
 
     @Lob
@@ -49,17 +50,17 @@ open class Job {
     @Column(name = "Rank")
     open var rank: String? = null
 
-    @Column(name = "Reward")
+    @Column(name = "Reward", nullable = false)
     open var reward: BigDecimal? = null
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Location")
+    @Column(name = "Location", nullable = false)
     open var location: String? = null
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     open var status: String? = null
 
     @Column(name = "Date_created")
@@ -122,8 +123,11 @@ open class Job {
         this.dateResolved = dateResolved
     }
 
+    constructor(
+    ) {}
+
     override fun toString(): String {
-        return "Job(id=$id, group=$group, title=$title, description=$description, rank=$rank, reward=$reward, location=$location, status=$status, dateCreated=$dateCreated, datePosted=$datePosted, dateAccepted=$dateAccepted, dateResolved=$dateResolved)"
+        return "Job(id=$id, adventurerId=$adventurerId, costomerId=$customerId, group=$group, title=$title, description=$description, rank=$rank, reward=$reward, location=$location, status=$status, dateCreated=$dateCreated, datePosted=$datePosted, dateAccepted=$dateAccepted, dateResolved=$dateResolved)"
     }
 
 

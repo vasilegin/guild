@@ -25,7 +25,7 @@ open class Participate {
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "Role")
+    @Column(name = "Role", nullable = false)
     open var role: String? = null
 
     @Column(name = "Date_joined")
@@ -48,6 +48,9 @@ open class Participate {
         this.role = role
         this.dateJoined = dateJoined
         this.dateLeft = dateLeft
+    }
+
+    constructor() {
     }
 
     override fun toString(): String {

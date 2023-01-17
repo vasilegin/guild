@@ -16,7 +16,7 @@ open class Role {
 
 	@Lob
 	@Type(type = "org.hibernate.type.TextType")
-	@Column(name = "Name")
+	@Column(name = "Name", nullable = false)
 	open var name: String? = null
 
 	@OneToMany(mappedBy = "role")
@@ -26,6 +26,9 @@ open class Role {
 	constructor(id: Long?, name: String?) {
 		this.id = id
 		this.name = name
+	}
+
+	constructor() {
 	}
 
 	override fun toString(): String {

@@ -25,9 +25,7 @@ class JwtTokenFilter(private val tokenProvider: JwtTokenProvider) : OncePerReque
             try {
                 val claims = tokenProvider.getClaimsFromToken(token)
                 if (!claims.expiration.before(Date())) {
-                    System.out.println(claims.subject);
                     val authentication = tokenProvider.getAuthentication(claims.subject)
-                    System.out.println("2");
                     if (authentication.isAuthenticated) {
                         SecurityContextHolder.getContext().authentication = authentication
                     }
