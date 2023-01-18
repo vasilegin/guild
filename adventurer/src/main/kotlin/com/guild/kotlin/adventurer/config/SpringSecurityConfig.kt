@@ -32,7 +32,6 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.cors()
         http.csrf()
             .disable()
             .sessionManagement()
