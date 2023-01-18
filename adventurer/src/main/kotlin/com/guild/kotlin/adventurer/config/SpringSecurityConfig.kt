@@ -9,9 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +25,7 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
         return NoOpPasswordEncoder.getInstance()
     }
 
+
     @Bean
     @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager {
@@ -32,6 +34,8 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
+        http.cors()
+            .disable()
         http.csrf()
             .disable()
             .sessionManagement()
