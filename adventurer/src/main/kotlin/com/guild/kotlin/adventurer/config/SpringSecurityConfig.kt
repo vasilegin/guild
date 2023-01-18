@@ -11,10 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
@@ -32,10 +36,30 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
         return super.authenticationManagerBean()
     }
 
+    @Bean
+    fun corsConfigurer(): WebMvcConfigurer? {
+        return object : WebMvcConfigurer {
+            override fun addCorsMappings(registry: CorsRegistry) {
+                registry.addMapping("/rest/**").allowedMethods("*").allowedHeaders("*");
+            }
+        }
+    }
+
+//    @Bean
+//    fun corsFilter(): CorsFilter? {
+//        val source = UrlBasedCorsConfigurationSource()
+//        val config = CorsConfiguration()
+//        config.addAllowedOrigin("*")
+//        config.addAllowedHeader("*")
+//        config.addAllowedMethod("*")
+//        source.registerCorsConfiguration("/**", config)
+//        return CorsFilter(source)
+//    }
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors()
-            .disable()
+            .and()
         http.csrf()
             .disable()
             .sessionManagement()
