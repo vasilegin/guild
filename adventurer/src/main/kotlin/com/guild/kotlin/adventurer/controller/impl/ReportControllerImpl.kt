@@ -15,7 +15,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/report")
-@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin(origins = ["http://localhost:3000"])
 class ReportControllerImpl(private val reportServiceImpl: IService<Report>): Resource<Report> {
     override fun findAll(
         pageNumber: Int,

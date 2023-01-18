@@ -40,9 +40,9 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter() {
             .and()
             .authorizeRequests()
             .antMatchers("/user/**").permitAll()
-            .antMatchers("/swagger-ui/**").permitAll()
-            .antMatchers("/v3/api-docs/**").permitAll()
-            .antMatchers("/swagger-ui.html").permitAll()
+//            .antMatchers("/swagger-ui/**").permitAll()
+//            .antMatchers("/v3/api-docs/**").permitAll()
+//            .antMatchers("/swagger-ui.html").permitAll()
             .anyRequest().authenticated()
 
         http.apply(JwtTokenConfigurer(tokenProvider!!))

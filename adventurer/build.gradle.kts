@@ -26,6 +26,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.mockk:mockk:1.10.4")
 	implementation("org.json:json:20211205")
 
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
