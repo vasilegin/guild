@@ -6,7 +6,7 @@ import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
-@Table(name = "participates", schema = "public")
+@Table(name = "participates")
 open class Participate {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -6,7 +6,7 @@ import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
-@Table(name = "guild_staff", schema = "public")
+@Table(name = "guild_staff")
 open class GuildStaff {
 
     @Id

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "role", schema = "public")
+@Table(name = "role")
 open class Role {
 
 	@Id

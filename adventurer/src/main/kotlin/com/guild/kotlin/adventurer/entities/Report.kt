@@ -6,7 +6,7 @@ import java.time.OffsetDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "reports", schema = "public")
+@Table(name = "reports")
 open class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -8,7 +8,7 @@ import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "users")
 open class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

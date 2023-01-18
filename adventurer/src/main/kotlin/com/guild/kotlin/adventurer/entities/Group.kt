@@ -5,7 +5,7 @@ import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
-@Table(name = "groups", schema = "public")
+@Table(name = "groups")
 open class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
