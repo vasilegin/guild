@@ -18,7 +18,8 @@ import java.util.*
 
 @RestController
 @RequestMapping("/adventurer")
-//@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
+@CrossOrigin(origins = ["http://localhost:3000"])
 class AdventurersControllerImpl(private val userPageService: AdventurerUserServiceImpl) : Resource<User>  {
 
     @GetMapping

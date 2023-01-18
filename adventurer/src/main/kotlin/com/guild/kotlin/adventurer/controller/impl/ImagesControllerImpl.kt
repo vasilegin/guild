@@ -14,7 +14,8 @@ import kotlin.io.path.writeBytes
 
 @RestController
 @RequestMapping("/images")
-//@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
+@CrossOrigin(origins = ["http://localhost:3000"])
 class ImagesControllerImpl(private val photoServiceImpl: PhotoServiceImpl){
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])

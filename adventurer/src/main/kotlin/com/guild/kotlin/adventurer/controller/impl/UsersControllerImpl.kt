@@ -16,7 +16,8 @@ import java.util.*
 
 @RestController
 @RequestMapping("/users")
-//@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
+@CrossOrigin(origins = ["http://localhost:3000"])
 class UsersControllerImpl(private val userService: UserServiceImpl) : Resource<User> {
     override fun findAll(
         pageNumber: Int,
