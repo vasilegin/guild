@@ -17,7 +17,7 @@ import java.util.*
 @RestController
 @RequestMapping("/review")
 //@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
-@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin(origins = ["http://localhost:3000"])
 class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>,
                            private val jobRepository: JobRepository,
                            private val userRepository: UserRepository): Resource<Review> {
