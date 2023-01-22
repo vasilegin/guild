@@ -21,7 +21,7 @@ import java.util.*
 
 
 @RestController
-@RequestMapping("/jobs")
+@RequestMapping("/rest/jobs")
 //@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
 //@CrossOrigin(origins = ["http://localhost:3000"])
 class JobControllerImpl(private val jobService: IService<Job>, private val jobPageService: IPageService<Job>, private val jobServiceImpl: JobServiceImpl, private val  userRepository: UserRepository) : Resource<Job> {

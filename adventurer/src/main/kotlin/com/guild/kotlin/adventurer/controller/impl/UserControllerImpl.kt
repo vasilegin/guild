@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/rest/user")
 //@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
 //@CrossOrigin(origins = ["http://localhost:3000"])
 class UserControllerImpl(private val authenticationManager: AuthenticationManager,

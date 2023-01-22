@@ -15,7 +15,7 @@ import java.util.*
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/rest/users")
 //@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
 //@CrossOrigin(origins = ["http://localhost:3000"])
 class UsersControllerImpl(private val userService: UserServiceImpl) : Resource<User> {

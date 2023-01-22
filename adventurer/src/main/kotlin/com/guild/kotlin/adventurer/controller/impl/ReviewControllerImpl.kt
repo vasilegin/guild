@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/rest/review")
 //@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
 //@CrossOrigin(origins = ["http://localhost:3000"])
 class ReviewControllerImpl(private val reviewServiceImpl: IService<Review>,

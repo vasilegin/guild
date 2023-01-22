@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/rest/report")
 //@CrossOrigin(allowedHeaders = ["Authorization", "Origin"])
 //@CrossOrigin(origins = ["http://localhost:3000"])
 class ReportControllerImpl(private val reportServiceImpl: IService<Report>): Resource<Report> {
