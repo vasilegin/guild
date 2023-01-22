@@ -25,6 +25,8 @@ class WebConfiguration : WebMvcConfigurer {
     }
     override fun addViewControllers(registry: ViewControllerRegistry) {
         log.info("addViewControllers called")
+        registry.addViewController("/register").setViewName("forward:/index.html")
+        registry.addViewController("/login").setViewName("forward:/index.html")
         registry.addViewController("/").setViewName("forward:/index.html")
     }
 }
