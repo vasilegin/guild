@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.380ecf3a.css",
-    "main.js": "/static/js/main.c84469df.js",
+    "main.js": "/static/js/main.81805824.js",
     "static/media/20230104_213639.jpg": "/static/media/20230104_213639.84d67d90c65332e7331b.jpg",
     "static/media/purepng_com_leopardanimalwildfastcheetahleopardspeed_981524644082pezau.png": "/static/media/purepng_com_leopardanimalwildfastcheetahleopardspeed_981524644082pezau.7d33e2a6642d8e198ee9.png",
     "static/media/1.jpg": "/static/media/1.74e9d7f7eff333749b5f.jpg",
@@ -10,10 +10,10 @@
     "static/media/UploadIcon.svg": "/static/media/UploadIcon.469126df4127e870c21611e576b85d00.svg",
     "index.html": "/index.html",
     "main.380ecf3a.css.map": "/static/css/main.380ecf3a.css.map",
-    "main.c84469df.js.map": "/static/js/main.c84469df.js.map"
+    "main.81805824.js.map": "/static/js/main.81805824.js.map"
   },
   "entrypoints": [
     "static/css/main.380ecf3a.css",
-    "static/js/main.c84469df.js"
+    "static/js/main.81805824.js"
   ]
 }
